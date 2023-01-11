@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import BoardsPage from "./BoardsPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { createContext, react } from "react";
+import Context from './Context'
+
+export const Storage = createContext()
 
 function App() {
+  
+const values = Context()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Storage.Provider value={values}>
+      <div className="">
+        <BoardsPage />
+      </div>
+    </Storage.Provider>
   );
 }
 
