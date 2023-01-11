@@ -9,8 +9,8 @@ const FirebaseConfig = {
   messagingSenderId: process.env.REACT_messagingSenderId,
   appId: process.env.REACT_appId,
   measurementId: process.env.REACT_measurementId,
-};
+}
+import { getFirestore } from '@firebase/firestore'
 
-const app = initializeApp(FirebaseConfig);
 
-export const db = getFirestore(app);
+export const db = getFirestore(app)
