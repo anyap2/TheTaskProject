@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { db } from "./Firebase-config.js";
+import { db } from "../Firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Storage } from "./App.js";
+import { Storage } from "../App.js";
 
 export default function BoardsPage() {
 

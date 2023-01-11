@@ -1,17 +1,17 @@
-import { db } from "./Firebase-config.js";
+import { db } from "../Firebase-config.js";
 import { useState, useEffect, useContext } from "react";
 import { updateDoc, doc } from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Storage } from "./App.js";
+import { Storage } from "../App.js";
 
 
-export default function EditBoard({data}) {
+export default function EditBoard({ data }) {
 
-  useEffect(()=>{
+  useEffect(() => {
     setEditBoardColor(data.Color)
     setEditBoardTitle(data.Title)
-  },[])
+  }, [])
 
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
@@ -21,7 +21,7 @@ export default function EditBoard({data}) {
 
   const updateBoard = () => {
     try {
-      
+
       const boardRef = doc(db, "boards", data.id)
       updateDoc(boardRef, { Title: editBoardTitle });
       updateDoc(boardRef, { Color: editBoardColor });
@@ -42,7 +42,7 @@ export default function EditBoard({data}) {
         <Form.Label>Name your board</Form.Label>
 
         <Form.Control type="text" placeholder="Title..."
-          value={editBoardTitle}
+          defaultValue={editBoardTitle}
           onChange={(e) => setEditBoardTitle(e.target.value)} />
 
       </Form.Group>
@@ -53,7 +53,7 @@ export default function EditBoard({data}) {
         <Form.Label>Change your mood</Form.Label>
 
         <Form.Select aria-label="Floating label select example"
-          value={editBoardColor}
+          defaultValue={editBoardColor}
           onChange={(e) => setEditBoardColor(e.target.value)}>
 
           <option>Choose your colour</option>

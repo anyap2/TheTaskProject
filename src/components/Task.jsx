@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { db } from '../Firebase-config';
-import { collection, getDocs,doc, addDoc, deleteDoc} from 'firebase/firestore';
+import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore';
 import {NavLink} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+
 
 
 function Task(
@@ -23,7 +24,7 @@ function Task(
         await addDoc(toDoCollectionRef, { name: newToDoTask })
         // window.location.reload(true);
     }
-    
+
     const addItemShopList = async () => {
         await addDoc(shoppingListCollectionRef, { name: newItem, quantity: newQuantity })
         // window.location.reload(true);
@@ -47,20 +48,20 @@ function Task(
         getShoppingListPage()
     }, [])
 
-    const deleteToDoTask = async (id) =>{
+    const deleteToDoTask = async (id) => {
         console.log(id);
         const toDoDoc = doc(db, "to-do", id)
         await deleteDoc(toDoDoc)
         window.location.reload(true);
-      };
+    };
 
 
-    const deleteShoppingItem = async (id) =>{
+    const deleteShoppingItem = async (id) => {
         console.log(id);
         const shoppingItemDoc = doc(db, "shopping-list", id)
         await deleteDoc(shoppingItemDoc)
         window.location.reload(true);
-      };
+    };
 
     return (
         <form>
@@ -76,8 +77,8 @@ function Task(
                     
                     <h3>{task.name}</h3>
                     <button type="button" onClick={() => deleteToDoTask(task?.id)}>
-                Delete task
-              </button>
+                        Delete task
+                    </button>
                 </div>
             })}
             {console.log(1)}
@@ -96,8 +97,8 @@ function Task(
                     
                     <h3>{item.name} <span>({item.quantity})</span> </h3>
                     <button type="button" onClick={() => deleteShoppingItem(item?.id)}>
-                Delete item
-              </button>
+                        Delete item
+                    </button>
                 </div>
             })}
     {console.log(2)}
