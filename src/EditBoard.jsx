@@ -1,30 +1,38 @@
 import { db } from "./Firebase-config.js";
-// import { async } from "@firebase/util";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { updateDoc, doc } from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Storage } from "./App.js";
 
-export default function EditBoard(props) {
 
-  const [editBoardTitle, setEditBoardTitle] = useState(props.board.Title)
-  const [editBoardColor, setEditBoardColor] = useState(props.board.Color)
+export default function EditBoard({data}) {
 
-  const updateTitle = async () => {
-    props.setShowEditWindow(false);
-    const boardRef = doc(db, "boards", props.board.id)
-    const updeteTitle = { Title: editBoardTitle }
-    await updateDoc(boardRef, updeteTitle);
-    // window.location.reload(false);
+  useEffect(()=>{
+    setEditBoardColor(data.Color)
+    setEditBoardTitle(data.Title)
+  },[])
 
+  const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
+    setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
+    setEditBoardColor, setEditBoardTitle, mapBoard
+  } = useContext(Storage)
+
+
+  const updateBoard = () => {
+    try {
+      
+      const boardRef = doc(db, "boards", data.id)
+      updateDoc(boardRef, { Title: editBoardTitle });
+      updateDoc(boardRef, { Color: editBoardColor });
+      // setBoardList[boardIndex].Title()
+      setShowEditWindow(false);
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
-  const updateColor = async () => {
-    const boardRef = doc(db, "boards", props.board.id)
-    const updeteColor = { Color: editBoardColor }
-    await updateDoc(boardRef, updeteColor);
-    window.location.reload(true);
-  }
 
   return (
     <Form>
@@ -64,8 +72,8 @@ export default function EditBoard(props) {
 
 
       <Button variant="primary" type="button"
-        onClick={() => { updateTitle(); updateColor() }}>
-        Create board
+        onClick={() => { updateBoard() }}>
+        Save the changes
       </Button>
 
     </Form>
