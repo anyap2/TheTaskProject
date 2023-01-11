@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { db } from "./Firebase-config.js";
-import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import BoardsList from "./BoardsList.jsx";
-import EditBoard from "./EditBoard.jsx";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 export default function BoardsPage() {
   const boardsCollectionRef = collection(db, "boards");
@@ -12,40 +13,68 @@ export default function BoardsPage() {
   const [newBoardColor, setNewBoardColor] = useState();
 
   const createBoard = async () => {
-    await addDoc(boardsCollectionRef, {
-      BoardTitle: newBoardTitle,
-      Color: Number(newBoardColor),
+    console.log({
+      Title: newBoardTitle,
+      Color: newBoardColor,
     });
-    window.location.reload(false);
+    try {
+      const newDoc=await addDoc(boardsCollectionRef, {
+        Title: newBoardTitle,
+        Color: newBoardColor,
+      });
+      console.log(newDoc?.id);
+      // get the single doc
+
+      // add the new doc to the boardLisrts array
+      // setBoardsList([...BoardsList,  newboarddddd])
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(newDoc);
+
+    // window.location.reload(false);
   };
 
   return (
     <div>
-      <h1>Your boards</h1>
+      <h1 className='lg'>Your boards</h1>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
 
-      <div>
-        
-        <input
-          type="text"
-          placeholder="Title your board"
-          onChange={(event) => {
-            setNewBoardTitle(event.target.value);
-          }}
-        />
+          <Form.Label>Name your board</Form.Label>
 
-        <input
-          type="number"
-          placeholder="Chose your mood"
-          onChange={(event) => {
-            setNewBoardColor(event.target.value);
-          }}
-        />
+          <Form.Control type="text" placeholder="Title..."
+            onChange={(event) => { setNewBoardTitle(event.target.value) }} />
 
-        <button onClick={createBoard}>Create board</button>
+        </Form.Group>
 
-        <BoardsList boardsList={boardsList} setBoardsList={setBoardsList} />
-        {/* <EditBoard setNewBoardTitle={setNewBoardTitle} setNewBoardColor={setNewBoardColor}/> */}
-      </div>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+
+          <Form.Label>Chose your mood</Form.Label>
+
+          <Form.Select aria-label="Floating label select example"
+            onChange={(event) => { setNewBoardColor(event.target.value) }}
+          >
+            <option>Choose your colour</option>
+            <option value='primary' >primary</option>
+            <option value='secondary' >secondary</option>
+            <option value='success' >success</option>
+            <option value='danger' >danger</option>
+            <option value='warning' >warning</option>
+            <option value='info' >info</option>
+            <option value='light' >light</option>
+            <option value='dark' >dark</option>
+          </Form.Select>
+
+        </Form.Group>
+
+        <Button variant="primary" type="button" onClick={createBoard}>
+          Create board
+        </Button>
+
+      </Form>
+      <BoardsList boardsList={boardsList} setBoardsList={setBoardsList} />
+
     </div>
   );
 }

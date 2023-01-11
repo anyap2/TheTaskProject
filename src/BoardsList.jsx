@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { db } from "./Firebase-config.js";
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc, } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, } from "firebase/firestore";
 import EditBoard from "./EditBoard.jsx";
+import "bootstrap/dist/css/bootstrap.min.css"
+import { Alert } from "react-bootstrap";
+
 
 export default function BoardsList(props) {
 
@@ -16,17 +19,17 @@ export default function BoardsList(props) {
       props.setBoardsList(
         data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
-      // console.log(data)
     };
     getBoards();
   }, []);
 
 
-
-  const deleteBoard = async (id) => {
+  const deleteBoard = async (id) =>{
+    console.log(id);
     const boardDoc = doc(db, "boards", id)
+    // console.log(boardDoc)
     await deleteDoc(boardDoc)
-    window.location.reload(false);
+    window.location.reload(true);
   };
 
 
@@ -36,25 +39,30 @@ export default function BoardsList(props) {
       {props.boardsList.map((board, index) => {
         return (
 
-          <div key={index}>
+          <Alert key={index}>
+            <p>{board?.Title}</p>
 
-            <p>{board?.BoardTitle}</p>
-            <p>{board?.Color}</p>
+            <div role="group" aria-label="Basic example">
+              <i onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
+                Edit
+              </i>
 
-            <button onClick={() => { setShowEditWindow(index) }}>
-              Edit
-            </button>
+              <p>{board?.Color}</p>
 
-            <button onClick={() => deleteBoard(board?.id)}>
-              Delete Board
-            </button>
+              <button type="button" onClick={() => deleteBoard(board?.id)}>
+                Delete Board
+              </button>
+            </div>
 
-            {showEditWindow === index &&
-              <div className="alert alert-secondary">
+            {
+              showEditWindow === index &&
+              <Alert>
                 <EditBoard setShowEditWindow={setShowEditWindow} board={board} />
-              </div>}
+              </Alert>
+            }
+          </Alert>
 
-          </div>
+
         );
       })}
 
