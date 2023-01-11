@@ -1,44 +1,50 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { db } from './Firebase-config'
-import { collection, getDoc, getDocs, doc } from "firebase/firestore";
-import Countdown from 'react-countdown';
-
+import { collection, deleteDoc, getDocs, doc, addDoc } from "firebase/firestore";
+import "./details.css"
 function Details() {
-    const [tasks, setTasks] = useState()
-    const [time, setTime]=useState(86400)
-    
-    const boardsCollectionRef = doc(db, "boards", "XJLUvyRd4Tx6rSxhhtxp")
-    // to be replaced with id taken from list page +id name for the headline^^^
-
+    const [tasks, setTasks] = useState([])
+    const [newTask, setNewTask]=useState()
+    const shoppingListCollectionRef = collection(db, "shopping-list",)
     useEffect(() => {
-        const getBoards = async () => {
-            const data = await getDoc(boardsCollectionRef);
-            setTasks(JSON.stringify(data.data()))
+        const getTasks = async () => {
+            const data = await getDocs(shoppingListCollectionRef);
+            setTasks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
         };
-        getBoards()
-    }, [])
-    const Completionist = () => alert("You are good to go!");
-function PlusDay() {
-    setTime(time+86400000)
-}
+        getTasks()},[])
+    const deleteTask = async (id) =>{
+        console.log(id);
+        const boardDoc = doc(db, "shopping-list", id)
+        console.log(boardDoc)
+        await deleteDoc(boardDoc)
+        window.location.reload(true);
+      };
+      const addTask= async()=>{
+       await addDoc(shoppingListCollectionRef, {name: newTask})
+       window.location.reload(true);
+       tasks.push({newTask})}
     return (
         <div className="DetailsMain">
             <div className="DetailsTop">
-                {/* ID used as headline for the detailspage */}
+                <h1>("shopping-list")</h1>
             </div>
             <div className="DetailsBody">
                 <ul>
-                    <li>{tasks}</li>
-                </ul>
+                    {tasks.map((item, index) =>
+                        <li key={index}>
+                            <input type="checkbox" name="packersOff" id={index} value="1" />
+                            <label className="strikethrough" htmlFor={index}>{item.name} ({item.quantity})</label>
+                            <br/>
+                            <button type="button" onClick={() => deleteTask(item?.id)}>Delete</button>
+                            <br/>
+                            <br/>
+                        </li>)}</ul>
             </div>
             <div className="DetailsBot">
-                {/* set deadline for the list add % of work done add strikeout for text and delet buttons */}
-                <button onClick={()=>PlusDay()}>Add one day</button>
+                <input onChange={(e)=>setNewTask(e.target.value)} type="text" placeholder="New task here"></input>
+                <input onClick={addTask} type="Button" value={"✓"}/>
             </div>
-            <Countdown date={Date.now() + time}>
-      <Completionist />
-    </Countdown>
         </div>
     );
 }
