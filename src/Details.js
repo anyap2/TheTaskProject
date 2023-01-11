@@ -6,28 +6,28 @@ import "./details.css"
 function Details() {
     const [tasks, setTasks] = useState([])
     const [newTask, setNewTask]=useState()
-    const shoppingListCollectionRef = collection(db, "shopping-list",)
+    const ListCollectionRef = collection(db, "shopping-list",)
     useEffect(() => {
         const getTasks = async () => {
-            const data = await getDocs(shoppingListCollectionRef);
+            const data = await getDocs(ListCollectionRef);
             setTasks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
         };
         getTasks()},[])
     const deleteTask = async (id) =>{
         console.log(id);
-        const boardDoc = doc(db, "shopping-list", id)
-        console.log(boardDoc)
-        await deleteDoc(boardDoc)
+        const listDoc = doc(db, "shopping-list", id)
+        console.log(listDoc)
+        await deleteDoc(listDoc)
         window.location.reload(true);
       };
       const addTask= async()=>{
-       await addDoc(shoppingListCollectionRef, {name: newTask})
+       await addDoc(ListCollectionRef, {name: newTask})
        window.location.reload(true);
-       tasks.push({newTask})}
+      }
     return (
         <div className="DetailsMain">
             <div className="DetailsTop">
-                <h1>("shopping-list")</h1>
+                <h1>shopping-list</h1>
             </div>
             <div className="DetailsBody">
                 <ul>
