@@ -7,17 +7,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.0-alpha1",
-<<<<<<< HEAD
     "firebase": "^9.15.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-countdown": "^2.3.5",
-=======
     "bootstrap-icons": "^1.10.3",
-    "firebase": "^9.15.0",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.7.0",
->>>>>>> master
+    
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
     "react-router-dom": "^6.6.2",
