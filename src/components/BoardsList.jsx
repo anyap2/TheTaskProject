@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useEffect, useContext } from "react";
 =======
 import { useState, useEffect, useContext } from "react";
 >>>>>>> bc504c2 (bit of changes to connected vers)
+=======
+import { useEffect, useContext } from "react";
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
 import { db } from "../Firebase-config.js";
 import { collection, getDocs, doc, deleteDoc, } from "firebase/firestore";
 import EditBoard from "./EditBoard.jsx";
@@ -10,14 +14,19 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
 import { Storage } from "../App.js";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Card from 'react-bootstrap/Card';;
 =======
 >>>>>>> bc504c2 (bit of changes to connected vers)
+=======
+import Card from 'react-bootstrap/Card';;
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
 
 
 export default function BoardsList() {
   const boardsCollectionRef = collection(db, "boards");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   const { boardsList, setBoardsList, showEditWindow, setShowEditWindow, selectedColor, setSelectedColor } = useContext(Storage)
 
@@ -28,6 +37,10 @@ export default function BoardsList() {
 
   // const [clonBoardsList, setClonBoardsList]=useState(boardsList)
 >>>>>>> bc504c2 (bit of changes to connected vers)
+=======
+  const { boardsList, setBoardsList, showEditWindow, setShowEditWindow, selectedColor, setSelectedColor } = useContext(Storage)
+
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
 
   useEffect(() => {
     const getBoards = async () => {
@@ -37,6 +50,7 @@ export default function BoardsList() {
       );
     };
     getBoards();
+<<<<<<< HEAD
 <<<<<<< HEAD
   }, []);
 
@@ -51,15 +65,22 @@ export default function BoardsList() {
   }, [
     // boardsList
   ]);
+=======
+  }, []);
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
 
 
-  const deleteBoard = (id) => {
+  const deleteBoard = async (id) => {
     try {
-      if(!id) alert('no id')
+      if (!id) alert('no id')
       console.log(db, id);
       const boardDoc = doc(db, "boards", id)
+<<<<<<< HEAD
       deleteDoc(boardDoc)
 >>>>>>> bc504c2 (bit of changes to connected vers)
+=======
+      await deleteDoc(boardDoc)
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
       let temp = boardsList
       temp = temp.filter(element => element.id !== id)
       setBoardsList([...temp])
@@ -72,11 +93,15 @@ export default function BoardsList() {
     <div>
       {boardsList.map((board, index) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
         return (<Card key={index}
           bg={board?.Color.toLowerCase()}
           text={board?.Color.toLowerCase() === 'light' ? 'dark' : 'white'}
           style={{ width: '18rem' }}
           className="mb-2">
+<<<<<<< HEAD
 
           <Card.Title>{board?.Color.toString()} </Card.Title>
           <Card.Text>
@@ -104,15 +129,28 @@ export default function BoardsList() {
         return (
           <Alert key={index}>
             <div role="group" aria-label="Basic example">
+=======
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
 
-              <p>{board?.Title}</p>
-              <p>{board?.Color}</p>
-              
+          <Card.Title>{board?.Color.toString()} </Card.Title>
+          <Card.Text>
+           {board?.Title.toString()}
+           {board?.Color.toString()}
+          </Card.Text>
+          <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
+            Edit
+          </i>
 
-              <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
-                Edit
-              </i>
+          <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
+            Delete Board
+          </i>
+          {
+            showEditWindow === index ?
+              <Alert variant={board?.Color}>
+                <EditBoard data={boardsList[index]} />
+              </Alert> : <></>}
 
+<<<<<<< HEAD
               <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
                 Delete Board
               </i>
@@ -133,3 +171,9 @@ export default function BoardsList() {
   );
 }
 >>>>>>> bc504c2 (bit of changes to connected vers)
+=======
+        </Card>)
+      })
+      }    </div>)
+}
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)

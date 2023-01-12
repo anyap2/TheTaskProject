@@ -57,6 +57,9 @@ function Details() {
                 <input onClick={() => addTask} type="Button" defaultValue={"✓"} />
 
                 <input onClick={addTask} type="Button" value={"✓"} />
+
+                <input onClick={() => addTask} type="Button" defaultValue={"✓"} />
+
             </div>
 
         </div>

@@ -70,6 +70,7 @@ function Task(
                 <Form.Group className="mb-3" controlId="formBasicEmail">
 
                     <Form.Label>Your to do list<NavLink state={{ listId:location.state.listId}}className="link" to="/Details">Details</NavLink> </Form.Label>
+                    <Form.Label>Your to do list</Form.Label>
 
                     <Form.Control type="email" placeholder="new to do task..."
                         onChange={(event) => { setNewToDoTask(event.target.value) }} />

@@ -10,12 +10,15 @@ export default function EditBoard({ data }) {
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
   useEffect(() => {
     setEditBoardColor(data.Color)
     setEditBoardTitle(data.Title)
   }, [])
 >>>>>>> bc504c2 (bit of changes to connected vers)
 
+=======
+>>>>>>> c7ed6b3 ( anyasFull,little bit progress)
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
     setEditBoardColor, setEditBoardTitle, mapBoard

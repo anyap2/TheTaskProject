@@ -9,6 +9,7 @@ import { Route, Routes, NavLink, } from 'react-router-dom';
 export const Storage = createContext()
 
 
+
 function App() {
 
   const values = Context()
@@ -22,7 +23,7 @@ function App() {
           <BoardsPage />
           <Task />
           <Details />
-          
+
           <Routes>
             <Route path="/Details" element={<Details />}> </Route>
             <Route path="/components/Task" element={<Task />}> </Route>
@@ -31,6 +32,7 @@ function App() {
       </Storage.Provider>
     </ThemeProvider>
 
+    
   );
 }
 
