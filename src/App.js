@@ -6,9 +6,7 @@ import Context from './Context'
 import Task from './components/Task'
 import Details from './components/Details'
 import { Route, Routes, NavLink, } from 'react-router-dom';
-
 export const Storage = createContext()
-
 
 
 function App() {
@@ -24,10 +22,15 @@ function App() {
           <BoardsPage />
           <Task />
           <Details />
+          
+          <Routes>
+            <Route path="/Details" element={<Details />}> </Route>
+            <Route path="/components/Task" element={<Task />}> </Route>
+          </Routes>
         </div>
       </Storage.Provider>
     </ThemeProvider>
-    
+
   );
 }
 

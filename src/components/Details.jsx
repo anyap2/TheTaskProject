@@ -53,7 +53,10 @@ function Details() {
 
             <div className="DetailsBot">
                 <input onChange={(e) => setNewTask(e.target.value)} type="text" placeholder="New task here"></input>
+                
                 <input onClick={() => addTask} type="Button" defaultValue={"✓"} />
+
+                <input onClick={addTask} type="Button" value={"✓"} />
             </div>
 
         </div>

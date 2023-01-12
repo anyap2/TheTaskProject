@@ -1,18 +1,33 @@
+<<<<<<< HEAD
 import { useEffect, useContext } from "react";
+=======
+import { useState, useEffect, useContext } from "react";
+>>>>>>> bc504c2 (bit of changes to connected vers)
 import { db } from "../Firebase-config.js";
 import { collection, getDocs, doc, deleteDoc, } from "firebase/firestore";
 import EditBoard from "./EditBoard.jsx";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
 import { Storage } from "../App.js";
+<<<<<<< HEAD
 import Card from 'react-bootstrap/Card';;
+=======
+>>>>>>> bc504c2 (bit of changes to connected vers)
 
 
 export default function BoardsList() {
   const boardsCollectionRef = collection(db, "boards");
 
+<<<<<<< HEAD
   const { boardsList, setBoardsList, showEditWindow, setShowEditWindow, selectedColor, setSelectedColor } = useContext(Storage)
 
+=======
+  const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
+    setNewBoardTitle, showEditWindow, setShowEditWindow, mapBoard, setMapBoard
+  } = useContext(Storage)
+
+  // const [clonBoardsList, setClonBoardsList]=useState(boardsList)
+>>>>>>> bc504c2 (bit of changes to connected vers)
 
   useEffect(() => {
     const getBoards = async () => {
@@ -22,6 +37,7 @@ export default function BoardsList() {
       );
     };
     getBoards();
+<<<<<<< HEAD
   }, []);
 
 
@@ -31,6 +47,19 @@ export default function BoardsList() {
       console.log(db, id);
       const boardDoc = doc(db, "boards", id)
       await deleteDoc(boardDoc)
+=======
+  }, [
+    // boardsList
+  ]);
+
+
+  const deleteBoard = (id) => {
+    try {
+      if(!id) alert('no id')
+      console.log(db, id);
+      const boardDoc = doc(db, "boards", id)
+      deleteDoc(boardDoc)
+>>>>>>> bc504c2 (bit of changes to connected vers)
       let temp = boardsList
       temp = temp.filter(element => element.id !== id)
       setBoardsList([...temp])
@@ -42,6 +71,7 @@ export default function BoardsList() {
   return (
     <div>
       {boardsList.map((board, index) => {
+<<<<<<< HEAD
         return (<Card key={index}
           bg={board?.Color.toLowerCase()}
           text={board?.Color.toLowerCase() === 'light' ? 'dark' : 'white'}
@@ -70,3 +100,36 @@ export default function BoardsList() {
       })
       }    </div>)
 }
+=======
+        return (
+          <Alert key={index}>
+            <div role="group" aria-label="Basic example">
+
+              <p>{board?.Title}</p>
+              <p>{board?.Color}</p>
+              
+
+              <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
+                Edit
+              </i>
+
+              <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
+                Delete Board
+              </i>
+
+            </div>
+
+            {
+              showEditWindow === index &&
+              <Alert>
+                <EditBoard data={boardsList[index]}/>
+              </Alert>
+            }
+
+          </Alert>
+        );
+      })}
+    </div>
+  );
+}
+>>>>>>> bc504c2 (bit of changes to connected vers)

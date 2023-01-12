@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
 
 
+
 export default function BoardsPage() {
 
   const boardsCollectionRef = collection(db, "boards");

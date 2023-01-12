@@ -4,10 +4,8 @@ import { db } from '../Firebase-config';
 import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
 import {NavLink} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
-
 
 
 function Task(

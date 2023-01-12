@@ -7,6 +7,14 @@ import { Storage } from "../App.js";
 
 
 export default function EditBoard({ data }) {
+<<<<<<< HEAD
+=======
+
+  useEffect(() => {
+    setEditBoardColor(data.Color)
+    setEditBoardTitle(data.Title)
+  }, [])
+>>>>>>> bc504c2 (bit of changes to connected vers)
 
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
