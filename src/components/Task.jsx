@@ -2,6 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { db } from '../Firebase-config';
 import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
 import {NavLink} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 
@@ -64,12 +67,22 @@ function Task(
     };
 
     return (
-        <form>
-            <h1>Your to do list<NavLink state={{ listId:location.state.listId}}className="link" to="/Details">Details</NavLink> </h1>
-            <input placeholder="new to do task..."
-                onChange={(event) => { setNewToDoTask(event.target.value) }}>
-            </input>
-            <button type="button" onClick={()=>addToDotask()}>create new task</button>
+        <div>
+            <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                    <Form.Label>Your to do list<NavLink state={{ listId:location.state.listId}}className="link" to="/Details">Details</NavLink> </Form.Label>
+
+                    <Form.Control type="email" placeholder="new to do task..."
+                        onChange={(event) => { setNewToDoTask(event.target.value) }} />
+
+                </Form.Group>
+
+                <Button variant="primary" type="button"
+                    onClick={() => ()=>addToDotask()}>
+                    create new task
+                </Button>
+            </Form>
 
             <h2>Your tasks:</h2>
             {toDoPage.map((task, index) => {
@@ -90,7 +103,7 @@ function Task(
             <input type='number' placeholder="how much..."
                 onChange={(event) => { setNewQuantity(event.target.value) }}>
             </input>
-            <button type="button" onClick={addItemShopList}>create new item</button>
+            <button type="button" onClick={() => (addItemShopList)}>create new item</button>
             <h2>Buy:</h2>
             {shoppingListPage.map((item, index) => {
                 return <div key={index}>
@@ -101,8 +114,7 @@ function Task(
                     </button>
                 </div>
             })}
-    {console.log(2)}
-        </form>
+        </div>
     )
 }
 export default Task;

@@ -42,7 +42,7 @@ function Details() {
                 <ul>
                     {tasks.map((item, index) =>
                         <li key={index}>
-                            <input type="checkbox" name="packersOff" id={index} value="1" />
+                            <input type="checkbox" name="packersOff" id={index} defaultValue="1" />
                             <label className="strikethrough" htmlFor={index}>{item.name} ({item.quantity})</label>
                             <br />
                             <button type="button" onClick={() => deleteTask(item?.id)}>Delete</button>
@@ -53,9 +53,9 @@ function Details() {
 
             <div className="DetailsBot">
                 <input onChange={(e) => setNewTask(e.target.value)} type="text" placeholder="New task here"></input>
-                <input onClick={addTask} type="Button" value={"✓"} />
+                <input onClick={() => addTask} type="Button" defaultValue={"✓"} />
             </div>
-            
+
         </div>
     );
 }

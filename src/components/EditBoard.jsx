@@ -8,16 +8,15 @@ import { Storage } from "../App.js";
 
 export default function EditBoard({ data }) {
 
-  useEffect(() => {
-    setEditBoardColor(data.Color)
-    setEditBoardTitle(data.Title)
-  }, [])
-
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
     setEditBoardColor, setEditBoardTitle, mapBoard
   } = useContext(Storage)
 
+  useEffect(() => {
+    setEditBoardColor(data.Color)
+    setEditBoardTitle(data.Title)
+  }, [])
 
   const updateBoard = () => {
     try {
@@ -25,8 +24,17 @@ export default function EditBoard({ data }) {
       const boardRef = doc(db, "boards", data.id)
       updateDoc(boardRef, { Title: editBoardTitle });
       updateDoc(boardRef, { Color: editBoardColor });
-      
+      const temp = boardsList;
+      let index;
+
+      temp.forEach((item,i) => {  if( item.id === data.id) index = i })
+     
+      temp[index].Title = editBoardTitle
+      temp[index].Color = editBoardColor
+      setBoardsList([...temp])
       setShowEditWindow(false);
+
+
     }
     catch (error) {
       console.log(error);
@@ -58,12 +66,11 @@ export default function EditBoard({ data }) {
 
           <option>Choose your colour</option>
           <option value='primary' >primary</option>
-          <option value='secondary' >secondary</option>
-          <option value='success' >success</option>
+            <option value='success' >success</option>
           <option value='danger' >danger</option>
           <option value='warning' >warning</option>
           <option value='info' >info</option>
-          <option value='light' >Thlightree</option>
+          <option value='light' >light</option>
           <option value='dark' >dark</option>
 
         </Form.Select>

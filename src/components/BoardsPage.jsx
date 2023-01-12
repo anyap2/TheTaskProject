@@ -6,12 +6,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
 
+
 export default function BoardsPage() {
 
   const boardsCollectionRef = collection(db, "boards");
 
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
-    setNewBoardTitle
+    setNewBoardTitle, selectedColor, setSelectedColor
   } = useContext(Storage)
 
   const createBoard = () => {
@@ -50,14 +51,13 @@ export default function BoardsPage() {
             onChange={(event) => { setNewBoardColor(event.target.value) }}>
 
             <option>Choose your colour</option>
-            <option value='primary' >primary</option>
-            <option value='secondary' >secondary</option>
-            <option value='success' >success</option>
-            <option value='danger' >danger</option>
-            <option value='warning' >warning</option>
-            <option value='info' >info</option>
-            <option value='light' >light</option>
-            <option value='dark' >dark</option>
+            <option value='info'>info</option>
+            <option value='warning'>warning</option>
+            <option value='success'>success</option>
+            <option value='danger'>danger</option>
+            <option value='primary'>primary</option>
+            <option value='light'>light</option>
+            <option value='dark'>dark</option>
           </Form.Select>
 
         </Form.Group>

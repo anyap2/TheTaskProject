@@ -1,20 +1,18 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { db } from "../Firebase-config.js";
 import { collection, getDocs, doc, deleteDoc, } from "firebase/firestore";
 import EditBoard from "./EditBoard.jsx";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
 import { Storage } from "../App.js";
+import Card from 'react-bootstrap/Card';;
 
 
 export default function BoardsList() {
   const boardsCollectionRef = collection(db, "boards");
 
-  const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
-    setNewBoardTitle, showEditWindow, setShowEditWindow, mapBoard, setMapBoard
-  } = useContext(Storage)
+  const { boardsList, setBoardsList, showEditWindow, setShowEditWindow, selectedColor, setSelectedColor } = useContext(Storage)
 
-  // const [clonBoardsList, setClonBoardsList]=useState(boardsList)
 
   useEffect(() => {
     const getBoards = async () => {
@@ -27,12 +25,12 @@ export default function BoardsList() {
   }, []);
 
 
-  const deleteBoard = (id) => {
+  const deleteBoard = async (id) => {
     try {
-      if(!id) alert('no id')
+      if (!id) alert('no id')
       console.log(db, id);
       const boardDoc = doc(db, "boards", id)
-      deleteDoc(boardDoc)
+      await deleteDoc(boardDoc)
       let temp = boardsList
       temp = temp.filter(element => element.id !== id)
       setBoardsList([...temp])
@@ -44,34 +42,31 @@ export default function BoardsList() {
   return (
     <div>
       {boardsList.map((board, index) => {
-        return (
-          <Alert key={index}>
-            <div role="group" aria-label="Basic example">
+        return (<Card key={index}
+          bg={board?.Color.toLowerCase()}
+          text={board?.Color.toLowerCase() === 'light' ? 'dark' : 'white'}
+          style={{ width: '18rem' }}
+          className="mb-2">
 
-              <p>{board?.Title}</p>
-              <p>{board?.Color}</p>
-              
+          <Card.Title>{board?.Color.toString()} </Card.Title>
+          <Card.Text>
+           {board?.Title.toString()}
+           {board?.Color.toString()}
+          </Card.Text>
+          <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
+            Edit
+          </i>
 
-              <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
-                Edit
-              </i>
+          <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
+            Delete Board
+          </i>
+          {
+            showEditWindow === index ?
+              <Alert variant={board?.Color}>
+                <EditBoard data={boardsList[index]} />
+              </Alert> : <></>}
 
-              <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
-                Delete Board
-              </i>
-
-            </div>
-
-            {
-              showEditWindow === index &&
-              <Alert>
-                <EditBoard data={boardsList[index]}/>
-              </Alert>
-            }
-
-          </Alert>
-        );
-      })}
-    </div>
-  );
+        </Card>)
+      })
+      }    </div>)
 }
