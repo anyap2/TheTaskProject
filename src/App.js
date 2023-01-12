@@ -19,6 +19,7 @@ function App() {
       minBreakpoint="xxs">
       <Storage.Provider value={values}>
         <div className="">
+
           <BoardsPage />
           <Task />
           <Details />
@@ -27,6 +28,7 @@ function App() {
             <Route path="/Details" element={<Details />}> </Route>
             <Route path="/components/Task" element={<Task />}> </Route>
           </Routes>
+          
         </div>
       </Storage.Provider>
     </ThemeProvider>

@@ -7,14 +7,6 @@ import { Storage } from "../App.js";
 
 
 export default function EditBoard({ data }) {
-<<<<<<< HEAD
-=======
-
-  useEffect(() => {
-    setEditBoardColor(data.Color)
-    setEditBoardTitle(data.Title)
-  }, [])
->>>>>>> bc504c2 (bit of changes to connected vers)
 
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
@@ -35,8 +27,8 @@ export default function EditBoard({ data }) {
       const temp = boardsList;
       let index;
 
-      temp.forEach((item,i) => {  if( item.id === data.id) index = i })
-     
+      temp.forEach((item, i) => { if (item.id === data.id) index = i })
+
       temp[index].Title = editBoardTitle
       temp[index].Color = editBoardColor
       setBoardsList([...temp])
@@ -74,7 +66,7 @@ export default function EditBoard({ data }) {
 
           <option>Choose your colour</option>
           <option value='primary' >primary</option>
-            <option value='success' >success</option>
+          <option value='success' >success</option>
           <option value='danger' >danger</option>
           <option value='warning' >warning</option>
           <option value='info' >info</option>
@@ -85,12 +77,11 @@ export default function EditBoard({ data }) {
 
       </Form.Group>
 
-
       <Button variant="primary" type="button"
         onClick={() => { updateBoard() }}>
         Save the changes
       </Button>
-{console.log(6)}
+
     </Form>
 
   );

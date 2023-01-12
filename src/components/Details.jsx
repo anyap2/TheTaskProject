@@ -3,12 +3,15 @@ import { useEffect } from "react";
 import { db } from '../Firebase-config'
 import { collection, deleteDoc, getDocs, doc, addDoc } from "firebase/firestore";
 import "./details.css"
+import { useLocation } from "react-router";
 
 function Details() {
-
+ const location =useLocation()
     const [tasks, setTasks] = useState([])
     const [newTask, setNewTask] = useState()
-    const ListCollectionRef = collection(db, "shopping-list",)
+    const ListCollectionRef = collection(db, "shopping list"
+        // location.state.listId,
+        )
 
     useEffect(() => {
         const getTasks = async () => {
@@ -20,7 +23,7 @@ function Details() {
 
     const deleteTask = async (id) => {
         console.log(id);
-        const listDoc = doc(db, "shopping-list", id)
+        const listDoc = doc(db, location.state.listId)
         console.log(listDoc)
         await deleteDoc(listDoc)
         window.location.reload(true);
@@ -48,15 +51,15 @@ function Details() {
                             <button type="button" onClick={() => deleteTask(item?.id)}>Delete</button>
                             <br />
                             <br />
-                        </li>)}</ul>
+                        </li>)}
+                </ul>
             </div>
 
             <div className="DetailsBot">
                 <input onChange={(e) => setNewTask(e.target.value)} type="text" placeholder="New task here"></input>
-                
+
                 <input onClick={() => addTask} type="Button" defaultValue={"✓"} />
 
-                <input onClick={addTask} type="Button" value={"✓"} />
             </div>
 
         </div>

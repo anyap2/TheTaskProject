@@ -13,8 +13,7 @@ export default function BoardsPage() {
   const boardsCollectionRef = collection(db, "boards");
 
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
-    setNewBoardTitle, selectedColor, setSelectedColor
-  } = useContext(Storage)
+    setNewBoardTitle } = useContext(Storage)
 
   const createBoard = () => {
     try {
@@ -26,9 +25,11 @@ export default function BoardsPage() {
 
       addDoc(boardsCollectionRef, doc_Data);
 
+
     } catch (error) {
       console.log(error);
     }
+
   };
 
   return (
@@ -63,7 +64,7 @@ export default function BoardsPage() {
 
         </Form.Group>
 
-        <Button variant="primary" type="button" onClick={()=>createBoard()}>
+        <Button variant="primary" type="button" onClick={() => createBoard()}>
           Create board
         </Button>
 
