@@ -25,7 +25,7 @@ export default function EditBoard({data}) {
       const boardRef = doc(db, "boards", data.id)
       updateDoc(boardRef, { Title: editBoardTitle });
       updateDoc(boardRef, { Color: editBoardColor });
-      // setBoardList[boardIndex].Title()
+      
       setShowEditWindow(false);
     }
     catch (error) {
@@ -75,7 +75,7 @@ export default function EditBoard({data}) {
         onClick={() => { updateBoard() }}>
         Save the changes
       </Button>
-
+{console.log(6)}
     </Form>
 
   );

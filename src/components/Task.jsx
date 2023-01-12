@@ -2,8 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { db } from '../Firebase-config';
 import { collection, getDocs,doc, addDoc, deleteDoc} from 'firebase/firestore';
+import {NavLink} from 'react-router-dom';
+import { useLocation } from "react-router-dom";
+
+
 function Task(
 ) {
+    const location=useLocation()
     const [newToDoTask, setNewToDoTask] = useState('')
     const [newItem, setNewItem] = useState('')
     const [newQuantity, setNewQuantity] = useState(0)
@@ -12,16 +17,16 @@ function Task(
     const [shoppingListPage, setShoppingListPage] = useState([])
 
     const toDoCollectionRef = collection(db, 'to-do')
-    const shoppingListCollectionRef = collection(db, 'shopping-list')
+    const shoppingListCollectionRef = collection(db, location.state.listId)
 
     const addToDotask = async () => {
         await addDoc(toDoCollectionRef, { name: newToDoTask })
-        window.location.reload(true);
+        // window.location.reload(true);
     }
     
     const addItemShopList = async () => {
         await addDoc(shoppingListCollectionRef, { name: newItem, quantity: newQuantity })
-        window.location.reload(true);
+        // window.location.reload(true);
     }
 
     useEffect(() => {
@@ -59,21 +64,23 @@ function Task(
 
     return (
         <form>
-            <h1>Your to do list</h1>
+            <h1>Your to do list<NavLink state={{ listId:location.state.listId}}className="link" to="/Details">Details</NavLink> </h1>
             <input placeholder="new to do task..."
                 onChange={(event) => { setNewToDoTask(event.target.value) }}>
             </input>
-            <button type="button" onClick={addToDotask}>create new task</button>
+            <button type="button" onClick={()=>addToDotask()}>create new task</button>
 
             <h2>Your tasks:</h2>
             {toDoPage.map((task, index) => {
                 return <div key={index}>
+                    
                     <h3>{task.name}</h3>
                     <button type="button" onClick={() => deleteToDoTask(task?.id)}>
                 Delete task
               </button>
                 </div>
             })}
+            {console.log(1)}
 
             <h1>Your shopping list</h1>
             <input placeholder="your item..."
@@ -86,12 +93,14 @@ function Task(
             <h2>Buy:</h2>
             {shoppingListPage.map((item, index) => {
                 return <div key={index}>
+                    
                     <h3>{item.name} <span>({item.quantity})</span> </h3>
                     <button type="button" onClick={() => deleteShoppingItem(item?.id)}>
                 Delete item
               </button>
                 </div>
             })}
+    {console.log(2)}
         </form>
     )
 }

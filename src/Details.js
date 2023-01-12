@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { db } from './Firebase-config'
+import { useLocation } from "react-router-dom";
 import { collection, deleteDoc, getDocs, doc, addDoc } from "firebase/firestore";
 import "./details.css"
 function Details() {
+    const location=useLocation()
     const [tasks, setTasks] = useState([])
     const [newTask, setNewTask]=useState()
-    const ListCollectionRef = collection(db, "shopping-list",)
+    const ListCollectionRef = collection(db, location.state.listId,)
     useEffect(() => {
         const getTasks = async () => {
             const data = await getDocs(ListCollectionRef);
@@ -15,7 +17,7 @@ function Details() {
         getTasks()},[])
     const deleteTask = async (id) =>{
         console.log(id);
-        const listDoc = doc(db, "shopping-list", id)
+        const listDoc = doc(db, location.state.listId, id)
         console.log(listDoc)
         await deleteDoc(listDoc)
         window.location.reload(true);
@@ -27,13 +29,13 @@ function Details() {
     return (
         <div className="DetailsMain">
             <div className="DetailsTop">
-                <h1>shopping-list</h1>
+                <h1>{location.state.listId}</h1>
             </div>
             <div className="DetailsBody">
                 <ul>
                     {tasks.map((item, index) =>
                         <li key={index}>
-                            <input type="checkbox" name="packersOff" id={index} value="1" />
+                            <input type="checkbox" name="packersOff" id={index} defaultValue="1" />
                             <label className="strikethrough" htmlFor={index}>{item.name} ({item.quantity})</label>
                             <br/>
                             <button type="button" onClick={() => deleteTask(item?.id)}>Delete</button>
@@ -43,8 +45,9 @@ function Details() {
             </div>
             <div className="DetailsBot">
                 <input onChange={(e)=>setNewTask(e.target.value)} type="text" placeholder="New task here"></input>
-                <input onClick={addTask} type="Button" value={"✓"}/>
+                <input onClick={()=>addTask()} type="Button" defaultValue={"✓"}/>
             </div>
+            {console.log(5)}
         </div>
     );
 }

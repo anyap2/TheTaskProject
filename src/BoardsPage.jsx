@@ -62,13 +62,14 @@ export default function BoardsPage() {
 
         </Form.Group>
 
-        <Button variant="primary" type="button" onClick={createBoard}>
+        <Button variant="primary" type="button" onClick={()=>createBoard()}>
           Create board
         </Button>
 
       </Form>
 
       <BoardsList />
+      {console.log(4)}
 
     </div>
   );

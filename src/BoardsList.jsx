@@ -5,6 +5,8 @@ import EditBoard from "./EditBoard.jsx";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
 import { Storage } from "./App.js";
+import {NavLink} from 'react-router-dom';
+
 
 
 export default function BoardsList() {
@@ -13,18 +15,17 @@ export default function BoardsList() {
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle, showEditWindow, setShowEditWindow, mapBoard, setMapBoard
   } = useContext(Storage)
-
-  // const [clonBoardsList, setClonBoardsList]=useState(boardsList)
-
+  
   useEffect(() => {
     const getBoards = async () => {
       const data = await getDocs(boardsCollectionRef);
       setBoardsList(
         data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
       );
     };
     getBoards();
-  }, [boardsList]);
+  }, []);
 
 
   const deleteBoard = (id) => {
@@ -48,18 +49,15 @@ export default function BoardsList() {
           <Alert key={index}>
             <div role="group" aria-label="Basic example">
 
-              <p>{board?.Title}</p>
+              <p>{board?.Title}</p><NavLink state={{ listId:board?.id}}className="link" to="../components/Task">List</NavLink>
+            {console.log(board?.id)}
               <p>{board?.Color}</p>
-              
-
               <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
                 Edit
               </i>
-
               <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
                 Delete Board
               </i>
-
             </div>
 
             {
