@@ -5,7 +5,8 @@ import EditBoard from "./EditBoard.jsx";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
 import { Storage } from "../App.js";
-import Card from 'react-bootstrap/Card';;
+import Card from 'react-bootstrap/Card';
+import { NavLink } from "react-router-dom";
 
 
 export default function BoardsList() {
@@ -44,6 +45,7 @@ export default function BoardsList() {
     <div>
       {boardsList.map((board, index) => {
         return (<Card key={index}
+          
           bg={board?.Color.toLowerCase()}
           text={board?.Color.toLowerCase() === 'light' ? 'dark' : 'white'}
           style={{ width: '18rem' }}
