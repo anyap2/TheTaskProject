@@ -1,35 +1,38 @@
-<<<<<<< HEAD
-=======
-import BoardsPage from "./BoardsPage";
+import ThemeProvider from 'react-bootstrap/ThemeProvider'
+import BoardsPage from "./components/BoardsPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createContext, react } from "react";
+import { createContext } from "react";
 import Context from './Context'
-import React from "react";
-import Task from "./components/Task";
+import Task from './components/Task'
+import Details from './components/Details'
+import { Route, Routes, NavLink, } from 'react-router-dom';
 export const Storage = createContext()
-import React from "react";
-import Task from "./components/Task";
 
->>>>>>> master
 
-  import Details from "./Details";
 function App() {
-  
-const values = Context()
+
+  const values = Context()
 
   return (
-<<<<<<< HEAD
-    <div className="App">
-      
-      <Details></Details>
-    </div>
-=======
-    <Storage.Provider value={values}>
-      <div className="">
-        <BoardsPage />
-      </div>
-    </Storage.Provider>
->>>>>>> master
+    <ThemeProvider breakpoints={[
+      'xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+      minBreakpoint="xxs">
+      <Storage.Provider value={values}>
+        <div className="">
+
+          <BoardsPage />
+          <Task />
+          <Details />
+          
+          <Routes>
+            <Route path="/Details" element={<Details />}> </Route>
+            <Route path="/components/Task" element={<Task />}> </Route>
+          </Routes>
+          
+        </div>
+      </Storage.Provider>
+    </ThemeProvider>
+
   );
 }
 
