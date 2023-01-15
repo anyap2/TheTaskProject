@@ -5,6 +5,8 @@ import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
+import { async } from "q";
+import { useForm } from "react-hook-form";
 
 
 
@@ -15,33 +17,41 @@ export default function BoardsPage() {
   const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
     setNewBoardTitle } = useContext(Storage)
 
-  const createBoard = () => {
-    try {
-      const doc_Data = {
-        Title: newBoardTitle,
-        Color: newBoardColor,
-      }
-      setBoardsList([...boardsList, doc_Data])
+  const { handleSubmit, reset, register, } = useForm()
 
-      addDoc(boardsCollectionRef, doc_Data);
+  const onSubmit = (data) => {
 
+    setNewBoardTitle(data.Title)
+    setNewBoardColor(data.Color)
 
-    } catch (error) {
-      console.log(error);
-    }
+    const doc_Data = {
+      Title: data.Title,
+      Color: data.Color,
+    };
+    // console.log({
+    //   Title: newBoardTitle,
+    //   Color: newBoardColor,
+    // })
+    console.log(doc_Data);
+    addDoc(boardsCollectionRef, doc_Data);
 
+    setBoardsList([...boardsList, data]);
+
+    reset()
   };
- // 
+
   return (
     <div>
       <h1 className='lg'>Your boards</h1>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
 
           <Form.Label>Name your board</Form.Label>
 
           <Form.Control type="text" placeholder="Title..."
-            onChange={(event) => { setNewBoardTitle(event.target.value) }} />
+            {...register("Title",)}
+          />
 
         </Form.Group>
 
@@ -50,7 +60,8 @@ export default function BoardsPage() {
           <Form.Label>Chose your mood</Form.Label>
 
           <Form.Select aria-label="Floating label select example"
-            onChange={(event) => { setNewBoardColor(event.target.value) }}>
+            {...register("Color",)}
+          >
 
             <option>Choose your colour</option>
             <option value='info'>info</option>
@@ -64,14 +75,13 @@ export default function BoardsPage() {
 
         </Form.Group>
 
-        <Button variant="primary" type="button" onClick={() => createBoard()}>
+        <Button variant="primary" type="submit" >
           Create board
         </Button>
 
       </Form>
 
       <BoardsList />
-      {console.log(4)}
 
     </div>
   );

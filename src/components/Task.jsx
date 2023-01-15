@@ -8,8 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 
 
-function Task(
-) {
+function Task() {
+
     const location = useLocation()
     const [newToDoTask, setNewToDoTask] = useState('')
     const [newItem, setNewItem] = useState('')
@@ -21,7 +21,7 @@ function Task(
     const toDoCollectionRef = collection(db, 'to-do')
     const shoppingListCollectionRef = collection(db, "shopping list"
         // location.state.listId
-        )
+    )
 
     const addToDotask = async () => {
         await addDoc(toDoCollectionRef, { name: newToDoTask })
@@ -34,27 +34,31 @@ function Task(
     }
 
     useEffect(() => {
-        try{const getToDoPage = async () => {
-            const data = await getDocs(toDoCollectionRef)
-            console.log(data);
-            setToDoPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        try {
+            const getToDoPage = async () => {
+                const data = await getDocs(toDoCollectionRef)
+                console.log(data);
+                setToDoPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+            }
+            getToDoPage()
         }
-        getToDoPage()}
         catch (error) {
             console.log(error);
-          }
+        }
     }, [])
 
     useEffect(() => {
-       try{ const getShoppingListPage = async () => {
-            const data = await getDocs(shoppingListCollectionRef)
-            console.log(data);
-            setShoppingListPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        try {
+            const getShoppingListPage = async () => {
+                const data = await getDocs(shoppingListCollectionRef)
+                console.log(data);
+                setShoppingListPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+            }
+            getShoppingListPage()
         }
-        getShoppingListPage()}
         catch (error) {
             console.log(error);
-          }
+        }
     }, [])
 
     const deleteToDoTask = async (id) => {
@@ -79,10 +83,11 @@ function Task(
 
                     <Form.Label>
                         Your to do list
-                        <NavLink state={{ listId: "shopping list"
-                        // location?.state?.listId
-                             }} 
-                             className="link" to="/Details">
+                        <NavLink state={{
+                            listId: "shopping list"
+                            // location?.state?.listId
+                        }}
+                            className="link" to="/Details">
                             Details
                         </NavLink>
                     </Form.Label>

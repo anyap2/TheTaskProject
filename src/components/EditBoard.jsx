@@ -17,11 +17,12 @@ export default function EditBoard({ data }) {
     setEditBoardColor(data.Color)
     setEditBoardTitle(data.Title)
   }, [])
+  console.log(data)
 
   const updateBoard = () => {
-    try {
+    // try {
 
-      const boardRef = doc(db, "boards", data.id)
+      const boardRef = doc(db, "boards", data)
       updateDoc(boardRef, { Title: editBoardTitle });
       updateDoc(boardRef, { Color: editBoardColor });
       const temp = boardsList;
@@ -35,10 +36,10 @@ export default function EditBoard({ data }) {
       setShowEditWindow(false);
 
 
-    }
-    catch (error) {
-      console.log(error);
-    }
+    // }
+    // catch (error) {
+    //   console.log(error);
+    // }
   }
 
 

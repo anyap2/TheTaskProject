@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { db } from "../Firebase-config.js";
-import { collection, getDocs, doc, deleteDoc, } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc} from "firebase/firestore";
 import EditBoard from "./EditBoard.jsx";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
@@ -23,13 +23,13 @@ export default function BoardsList() {
       );
     };
     getBoards();
-  }, [  ]);
+  }, []);
 
 
   const deleteBoard = (id) => {
     try {
-      if(!id) alert('no id')
-      console.log(db, id);
+      if (!id) alert('no id')
+
       const boardDoc = doc(db, "boards", id)
       deleteDoc(boardDoc)
       let temp = boardsList
@@ -43,32 +43,37 @@ export default function BoardsList() {
   return (
     <div>
       {boardsList.map((board, index) => {
-        return (<Card key={index}
-          bg={board?.Color.toLowerCase()}
-          text={board?.Color.toLowerCase() === 'light' ? 'dark' : 'white'}
-          style={{ width: '18rem' }}
-          className="mb-2">
+        console.log()
+        return (
+          <Card
+            key={index}
+            bg={board?.Color}
+            text={board?.Color === 'light' ? 'dark' : 'white'}
+            style={{ width: '18rem' }}
+            className="mb-2">
 
-          <Card.Title>{board?.Color.toString()} </Card.Title>
-          <Card.Text>
-           {board?.Title}
-           {board?.Color}
+            <Card.Title>
+              {board?.Title}
+            </Card.Title>
 
-          </Card.Text>
-          <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
-            Edit
-          </i>
+            <Card.Text>
+              {board?.Color}
+            </Card.Text>
 
-          <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
-            Delete Board
-          </i>
-          {
-            showEditWindow === index ?
+            <i type='button' onClick={() => { setShowEditWindow(index) }} className="bi bi-pencil-square">
+              Edit
+            </i>
+
+            <i type='button' onClick={() => deleteBoard(board?.id)} className="bi bi-pencil-square">
+              Delete Board
+            </i>
+
+            {showEditWindow === index ?
               <Alert variant={board?.Color}>
                 <EditBoard data={boardsList[index]} />
               </Alert> : <></>}
 
-        </Card>)
+          </Card>)
       })
       }    </div>)
 }
