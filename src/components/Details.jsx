@@ -9,14 +9,13 @@ function Details() {
  const location =useLocation()
     const [tasks, setTasks] = useState([])
     const [newTask, setNewTask] = useState()
-    const ListCollectionRef = collection(db, "shopping list"
-        // location.state.listId,
-        )
+    const ListCollectionRef = collection(db, location.state.listId
+    )
 
     useEffect(() => {
         const getTasks = async () => {
             const data = await getDocs(ListCollectionRef);
-            setTasks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+            setTasks(data.docs.map((doc) => ({ ...doc.data(), id: location.state.listId })))
         };
         getTasks()
     }, [])

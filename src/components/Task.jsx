@@ -85,7 +85,7 @@ function Task() {
                         Your to do list
                         <NavLink state={{
                             listId: "shopping list"
-                            // location?.state?.listId
+                            
                         }}
                             className="link" to="/Details">
                             Details

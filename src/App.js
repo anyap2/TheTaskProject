@@ -22,7 +22,7 @@ function App() {
 
           <BoardsPage />
           <Task />
-          <Details />
+          
           
           <Routes>
             <Route path="/Details" element={<Details />}> </Route>
