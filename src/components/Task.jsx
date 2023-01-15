@@ -1,12 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { db } from '../Firebase-config';
-import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, addDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
-
 
 function Task() {
 
@@ -17,11 +16,11 @@ function Task() {
 
     const [toDoPage, setToDoPage] = useState([])
     const [shoppingListPage, setShoppingListPage] = useState([])
+    const [arrayListPage, setArrayListPage] = useState([])
 
     const toDoCollectionRef = collection(db, 'to-do')
-    const shoppingListCollectionRef = collection(db, "shopping list"
-        // location.state.listId
-    )
+    const shoppingListCollectionRef = collection(db, "shopping list")
+    const arraysListCollectionRef = collection(db, 'lists')
 
     const addToDotask = async () => {
         await addDoc(toDoCollectionRef, { name: newToDoTask })
@@ -37,13 +36,13 @@ function Task() {
         try {
             const getToDoPage = async () => {
                 const data = await getDocs(toDoCollectionRef)
-                console.log(data);
+                // console.log(data);
                 setToDoPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
             }
             getToDoPage()
         }
         catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }, [])
 
@@ -51,7 +50,7 @@ function Task() {
         try {
             const getShoppingListPage = async () => {
                 const data = await getDocs(shoppingListCollectionRef)
-                console.log(data);
+                // console.log(data);
                 setShoppingListPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
             }
             getShoppingListPage()
@@ -60,9 +59,22 @@ function Task() {
             console.log(error);
         }
     }, [])
+    useEffect(() => {
+        try {
+            const getArrayListPage = async () => {
+                const data = await getDocs(arraysListCollectionRef)
+                // console.log(data);
+                setArrayListPage(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+            }
+            getArrayListPage()
+        }
+        catch (error) {
+            // console.log(error);
+        }
+    }, [])
 
     const deleteToDoTask = async (id) => {
-        console.log(id);
+        // console.log(id);
         const toDoDoc = doc(db, "to-do", id)
         await deleteDoc(toDoDoc)
         window.location.reload(true);
@@ -70,7 +82,7 @@ function Task() {
 
 
     const deleteShoppingItem = async (id) => {
-        console.log(id);
+        // console.log(id);
         const shoppingItemDoc = doc(db, "shopping-list", id)
         await deleteDoc(shoppingItemDoc)
         window.location.reload(true);
@@ -92,13 +104,13 @@ function Task() {
                         </NavLink>
                     </Form.Label>
 
-                    <Form.Control type="email" placeholder="new to do task..."
+                    <Form.Control type="text" placeholder="new to do task..."
                         onChange={(event) => { setNewToDoTask(event.target.value) }} />
 
                 </Form.Group>
 
                 <Button variant="primary" type="button"
-                    onClick={() => () => addToDotask()}>
+                    onClick={() => addToDotask()}>
                     create new task
                 </Button>
             </Form>
@@ -106,14 +118,38 @@ function Task() {
             <h2>Your tasks:</h2>
             {toDoPage.map((task, index) => {
                 return <div key={index}>
+                    <ul>
 
-                    <h3>{task.name}</h3>
-                    <button type="button" onClick={() => deleteToDoTask(task?.id)}>
-                        Delete task
-                    </button>
+                        <li><h3>{task.name}</h3></li>
+                        <button type="button" onClick={() => deleteToDoTask(task?.id)}>
+                            Delete task
+                        </button>
+                    </ul>
                 </div>
             })}
-            {console.log(1)}
+            <h3>lisos
+
+            </h3>
+            {arrayListPage.map((task, index) => {
+
+                return <div key={index}>
+                    {console.log(task.tasks)}
+
+                    <ul>
+                        {task.tasks && task.tasks.map((task2, index) => {
+                            console.log(task2)
+                            return <p>{task2}</p>
+                        })}
+                        <li>
+                        <h3>{task.item}</h3>
+                        </li>
+                        
+                        <li>
+                            <h3>{task.quantity}</h3>
+                        </li>
+                    </ul>
+                </div>
+            })}
 
             <h1>Your shopping list</h1>
             <input placeholder="your item..."
@@ -134,6 +170,7 @@ function Task() {
                 </div>
             })}
         </div>
+
     )
 }
 export default Task;
