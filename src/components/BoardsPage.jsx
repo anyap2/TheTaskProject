@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { db } from "./Firebase-config.js";
+import { db } from "../Firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Storage } from "./App.js";
+import { Storage } from "../App.js";
 
 export default function BoardsPage() {
 
@@ -28,7 +28,7 @@ export default function BoardsPage() {
       console.log(error);
     }
   };
-
+console.log("render")
   return (
     <div>
       <h1 className='lg'>Your boards</h1>
@@ -62,7 +62,7 @@ export default function BoardsPage() {
 
         </Form.Group>
 
-        <Button variant="primary" type="button" onClick={createBoard}>
+        <Button variant="primary" type="button" onClick={()=>createBoard()}>
           Create board
         </Button>
 

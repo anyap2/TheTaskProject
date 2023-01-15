@@ -1,12 +1,53 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { db } from './Firebase-config'
+import { useState, useEffect } from "react";
+import { db } from '../Firebase-config'
 import { collection, deleteDoc, getDocs, doc, addDoc } from "firebase/firestore";
-import "./details.css"
+import "../details.css"
+// import {
+//     Chart as ChartJS,
+//     CategoryScale,
+//     LinearScale,
+//     ArcElement,
+//     Tooltip,
+//     Legend
+// } from 'chart.js'
+
+// import{Doughnut} from 'react-chartjs-2'
+
+// ChartJS.register( CategoryScale,
+//     LinearScale,
+//     ArcElement,
+//     Tooltip,
+//     Legend);
+
+
 function Details() {
+    const [chartData,setChartData]=useState({
+        datasets:[]
+    })
+    const[chartOptions,setChartOprions]=useState({})
+    // useEffect (()=> {
+    //     labels: ['yes','no'],
+    //     datasets: [{
+    //     label:'Poll', 
+    //     data:[3,6] ,
+    //      backgroundColor:['black','red'] ,
+    //      borderColor:['black','red']
+    // })
     const [tasks, setTasks] = useState([])
     const [newTask, setNewTask]=useState()
     const ListCollectionRef = collection(db, "shopping-list",)
+    // const data={
+    //     labels: ['yes','no'],
+    //     datasets: [{
+    //     label:'Poll', 
+    //     data:[3,6] ,
+    //      backgroundColor:['black','red'] ,
+    //      borderColor:['black','red']
+    //     }]
+    // }
+    // const options= {
+
+    // }
     useEffect(() => {
         const getTasks = async () => {
             const data = await getDocs(ListCollectionRef);
@@ -25,9 +66,9 @@ function Details() {
        window.location.reload(true);
       }
     return (
-        <div className="DetailsMain">
+        <div className="DetailsMain"> 
             <div className="DetailsTop">
-                <h1>shopping-list</h1>
+                <h1>Shopping List Details</h1>
             </div>
             <div className="DetailsBody">
                 <ul>
@@ -44,6 +85,11 @@ function Details() {
             <div className="DetailsBot">
                 <input onChange={(e)=>setNewTask(e.target.value)} type="text" placeholder="New task here"></input>
                 <input onClick={addTask} type="Button" value={"✓"}/>
+            </div>
+            <div className="ChartDoghnut">
+            {/* <Doughnut data={data} options={options}>
+
+            </Doughnut> */}
             </div>
         </div>
     );

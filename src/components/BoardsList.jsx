@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import { db } from "./Firebase-config.js";
+import { db } from "../Firebase-config.js";
 import { collection, getDocs, doc, deleteDoc, } from "firebase/firestore";
-import EditBoard from "./EditBoard.jsx";
+import EditBoard from "../EditBoard.jsx";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
-import { Storage } from "./App.js";
+import { Storage } from "../App.js";
 
 
 export default function BoardsList() {
@@ -14,8 +14,6 @@ export default function BoardsList() {
     setNewBoardTitle, showEditWindow, setShowEditWindow, mapBoard, setMapBoard
   } = useContext(Storage)
 
-  // const [clonBoardsList, setClonBoardsList]=useState(boardsList)
-
   useEffect(() => {
     const getBoards = async () => {
       const data = await getDocs(boardsCollectionRef);
@@ -24,7 +22,7 @@ export default function BoardsList() {
       );
     };
     getBoards();
-  }, [boardsList]);
+  }, []);
 
 
   const deleteBoard = (id) => {

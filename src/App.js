@@ -1,35 +1,27 @@
-<<<<<<< HEAD
-=======
-import BoardsPage from "./BoardsPage";
+import React, { useState } from "react";
+import Task from "./components/Task";
+import BoardsPage from "./components/BoardsPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createContext, react } from "react";
 import Context from './Context'
-import React from "react";
-import Task from "./components/Task";
+import Details from "./components/Details";
+import DetailsChart from "./components/DetailsChart";
 export const Storage = createContext()
-import React from "react";
-import Task from "./components/Task";
 
->>>>>>> master
 
-  import Details from "./Details";
 function App() {
-  
-const values = Context()
 
+  const values = Context()
+  const [userData,setUserData]=useState()
   return (
-<<<<<<< HEAD
-    <div className="App">
-      
-      <Details></Details>
-    </div>
-=======
     <Storage.Provider value={values}>
-      <div className="">
+      <div className="App">
+        <Details></Details>
+        <DetailsChart />
+        <Task></Task>
         <BoardsPage />
       </div>
     </Storage.Provider>
->>>>>>> master
   );
 }
 
