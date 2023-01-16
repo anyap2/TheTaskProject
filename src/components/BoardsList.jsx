@@ -12,8 +12,7 @@ import Card from 'react-bootstrap/Card';;
 export default function BoardsList() {
   const boardsCollectionRef = collection(db, "boards");
 
-  const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
-    setNewBoardTitle, showEditWindow, setShowEditWindow, mapBoard, setMapBoard
+  const { boardsList, setBoardsList, showEditWindow, setShowEditWindow, editIndex, setEditIndex
   } = useContext(Storage)
 
   useEffect(() => {
@@ -42,13 +41,14 @@ export default function BoardsList() {
 
   return (
     <div id="boardsListDiv">
+      
       {boardsList.map((board, index) => {
         return (
           <Alert
             key={index}
             variant={board?.Color}
             text={board?.Color === 'light' ? 'dark' : 'white'}
-            style={{ width: '18rem' }}
+            style={{ width: '12rem' }}
             className="mb-2 p-xs">
 
             <Card.Title>
@@ -60,11 +60,12 @@ export default function BoardsList() {
             </Card.Text>
 
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit"
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-edit"
               width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
               fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"
               type='button' onClick={() => {
                 showEditWindow === index ? setShowEditWindow("") : setShowEditWindow(index)
+                  ; setEditIndex(index)
               }}>
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
@@ -72,7 +73,7 @@ export default function BoardsList() {
               <line x1="16" y1="5" x2="19" y2="8" />
             </svg>
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash"
               width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
               fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"
               type='button' onClick={() => deleteBoard(board.id, index)}>
@@ -83,19 +84,9 @@ export default function BoardsList() {
               <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
               <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
             </svg>
-
-
-            {showEditWindow === index ?
-              <div id='halfWhiteDiv'>
-                <div id="editBoardDiv">
-                  <EditBoard id={board.id} title={board.Title} 
-                  color={board.Color} index={index} />
-                </div>
-              </div>
-
-              : <></>}
-
-          </Alert>)
+          </Alert>
+        )
       })
-      }    </div>)
+      }
+    </div>)
 }
