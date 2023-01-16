@@ -1,0 +1,7 @@
+.BoardDetails {
+    position: absolute;
+    width: 100vw;
+    height: 30vh;
+    border: 1px solid black;
+    bottom: 5px;
+}

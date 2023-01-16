@@ -27,7 +27,8 @@ export default function BoardsPage() {
     setBoardsList([...boardsList, data]);
     const doc_Data = {
       Title: data.Title,
-      Color: data.Color
+      Color: data.Color,
+      tasksList: []
     };
     addDoc(boardsCollectionRef, doc_Data);
     reset()

@@ -12,11 +12,15 @@ export default function Context() {
     const [backGround, setBackGround] = useState()
     const [data,setData]=useState()
     const [editIndex, setEditIndex] = useState()
+    const [boardDetails, setBoardDetails] = useState()
+    const [boardIndex, setBoardIndex]=useState()
+    const [boardId, setBoardId]=useState('')
 
     return {
         boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
         setNewBoardTitle, editBoardTitle, setEditBoardTitle, editBoardColor,
         setEditBoardColor, showEditWindow, setShowEditWindow, backGround, setBackGround,
-        selectedColor, setSelectedColor, editIndex, setEditIndex
+        selectedColor, setSelectedColor, editIndex, setEditIndex, boardDetails, setBoardDetails,
+        boardIndex, setBoardIndex,boardId, setBoardId
     }
 }

@@ -12,8 +12,8 @@ import Card from 'react-bootstrap/Card';;
 export default function BoardsList() {
   const boardsCollectionRef = collection(db, "boards");
 
-  const { boardsList, setBoardsList, showEditWindow, setShowEditWindow, editIndex, setEditIndex
-  } = useContext(Storage)
+  const { boardIndex, setBoardIndex, boardsList, setBoardsList, showEditWindow, setShowEditWindow, editIndex, setEditIndex
+    ,setBoardId} = useContext(Storage)
 
   useEffect(() => {
     const getBoards = async () => {
@@ -41,10 +41,11 @@ export default function BoardsList() {
 
   return (
     <div id="boardsListDiv">
-      
+
       {boardsList.map((board, index) => {
         return (
-          <Alert
+          <div onClick={()=>{setBoardIndex(index);setBoardId(board?.id)}}>
+            <Alert
             key={index}
             variant={board?.Color}
             text={board?.Color === 'light' ? 'dark' : 'white'}
@@ -85,6 +86,7 @@ export default function BoardsList() {
               <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
             </svg>
           </Alert>
+          </div>
         )
       })
       }
