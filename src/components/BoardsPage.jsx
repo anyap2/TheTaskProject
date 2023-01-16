@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { db } from "../Firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
@@ -6,7 +6,7 @@ import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
-import EditBoard from "./EditBoard.jsx";
+import EditBoard from "./EditBoard";
 import './boardsPage.css'
 import Card from 'react-bootstrap/Card';
 
@@ -17,7 +17,7 @@ export default function BoardsPage() {
   const boardsCollectionRef = collection(db, "boards");
 
   const { boardsList, setBoardsList, setNewBoardColor, setNewBoardTitle,
-  showEditWindow, setShowEditWindow, editIndex, EditBoard } = useContext(Storage)
+  showEditWindow, setShowEditWindow, editIndex,editBord } = useContext(Storage)
 
   const { handleSubmit, reset, register, } = useForm()
 
@@ -33,7 +33,6 @@ export default function BoardsPage() {
     addDoc(boardsCollectionRef, doc_Data);
     reset()
   };
-
   return (
     <div id="createBoardDiv">
       {
@@ -41,7 +40,8 @@ export default function BoardsPage() {
           <div id='halfWhiteDiv'>
             <div id="editBoardDiv">
               <EditBoard />
-            </div>
+              </div>
+            
           </div>
 
           : <></>

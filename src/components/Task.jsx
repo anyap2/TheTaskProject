@@ -7,40 +7,39 @@ import './editForm.css'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
-import TaskList from "./TaskList.jsx";
+
 
 export default function Task() {
-
     const { boardsList, boardIndex, boardId, tasksList, setTasksList, setNewTask, newTask,
     } = useContext(Storage)
-
+    
     const { handleSubmit, reset, register, } = useForm()
     const [inputValue, setInputValue] = useState()
     const [tasksArray, setTasksArray] = useState()
     const board = boardsList[boardIndex]
-
+    
     const handleChange = (e) => {
         setInputValue(e.target.value)
         const tempArray = tasksArray && [...tasksArray, e.target.value]
         setTasksArray(tempArray)
     }
-
+    
     const onSubmit = async (data) => {
 
         const boardRef = doc(db, "boards", boardId)
-
+        
         setNewTask(data)
         const tempArray = tasksList && [...tasksList, data]
         setTasksList(tempArray);
-
+        
         await updateDoc(boardRef, {
             tasksList: arrayUnion(newTask)
         });
         console.log(boardId)
-
+        
         reset()
     };
-
+    
     return (
         <div id="createTaskDiv">
             <Card border="secondary" style={{ width: '18rem' }}>
@@ -63,7 +62,6 @@ export default function Task() {
 
                 </Card.Body>
             </Card>
-            <TasksList />
         </div>
     )
 }
