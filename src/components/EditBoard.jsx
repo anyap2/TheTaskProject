@@ -4,14 +4,13 @@ import { updateDoc, doc } from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
-import './editForm.css'
 import Modal from 'react-bootstrap/Modal';
 
 
 export default function EditBoard() {
 
   const { boardsList, setBoardsList, setShowEditWindow, editBoardTitle, editBoardColor,
-    setEditBoardColor, setEditBoardTitle, editIndex, setEditIndex
+    setEditBoardColor, setEditBoardTitle, editIndex,
   } = useContext(Storage)
 
   const board = boardsList[editIndex]
@@ -31,7 +30,7 @@ export default function EditBoard() {
 
   return (
     <div
-      className="modal show"
+      className="modal-show"
       style={{ display: 'block', position: 'initial' }}>
 
       <Modal.Dialog>

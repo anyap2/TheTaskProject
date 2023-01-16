@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { Storage } from "../App.js";
 import { useForm } from "react-hook-form";
-import './editForm.css'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
@@ -11,7 +10,7 @@ import TaskList from "./TaskList.jsx";
 
 export default function Task() {
 
-    const { boardsList, boardIndex, boardId, tasksList, setTasksList, setNewTask, newTask,
+    const { boardsList, boardIndex, boardId, tasksList, setTasksList, setNewTask, newTask, setBoardsList
     } = useContext(Storage)
 
     const { handleSubmit, reset, register, } = useForm()
@@ -29,15 +28,17 @@ export default function Task() {
 
         const boardRef = doc(db, "boards", boardId)
 
+        await updateDoc(boardRef, {
+            tasksList: arrayUnion(newTask)
+        });
+
         setNewTask(data)
         const tempArray = tasksList && [...tasksList, data]
         setTasksList(tempArray);
 
-        await updateDoc(boardRef, {
-            tasksList: arrayUnion(newTask)
-        });
         console.log(boardId)
-
+        setTasksList([...tasksList, data]);
+        setBoardsList(boardsList)
         reset()
     };
 
@@ -56,7 +57,7 @@ export default function Task() {
                         </Form.Group>
 
                         <Button variant="outline-info" type="submit" >
-                            Create board
+                            Create task
                         </Button>
 
                     </Form>

@@ -4,20 +4,16 @@ import TaskList from "./TaskList"
 
 export default function ShowTask() {
 
-    const { setShowTaskWindow,showTaskWindow, taskIndex } = useContext(Storage)
+    const { setShowTaskWindow, showTaskWindow, taskIndex, boardIndex } = useContext(Storage)
     console.log(showTaskWindow)
-    console.log(taskIndex)
-    
+    console.log(boardIndex)
+
     return (
 
         <div>
-            {showTaskWindow && taskIndex && showTaskWindow === taskIndex ?
-                <div id='halfWhiteDiv'>
-                    <div id="editBoardDiv">
-                        <TaskList />
-                    </div>
-                </div>
-                    : <></>}
+            {/* {showTaskWindow && showTaskWindow === boardIndex ?
+                <TaskList />
+                : <></>} */}
         </div>
 
     )

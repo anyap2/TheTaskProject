@@ -14,7 +14,7 @@ export default function Context() {
     const [boardDetails, setBoardDetails] = useState()
     const [boardIndex, setBoardIndex] = useState()
     const [boardId, setBoardId] = useState('')
-    const [tasksList, setTasksList] = useState()
+    const [tasksList, setTasksList] = useState([])
     const [newTask, setNewTask] = useState()
     const [taskIndex, setTaskIndex]=useState()
     const [showTaskWindow,setShowTaskWindow] = useState()

@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100VH;
     position: absolute;
-    background-color: rgb(195 190 194 / 80%);
+    background-color: rgba(196, 238, 255, 0.5  );
     display: flex;
     justify-content: center;
     align-items: flex-start;

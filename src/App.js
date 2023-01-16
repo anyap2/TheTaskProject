@@ -27,12 +27,14 @@ function App() {
             <BoardsPage />
             <Task />
           </div>
+
           <ShowTask />
 
-          <Routes>
+          {/* <Routes>
             <Route path="/Details" element={<Details />}> </Route>
             <Route path="/components/Task" element={<Task />}> </Route>
-          </Routes>
+          </Routes> */}
+
         </div>
       </Storage.Provider>
     </ThemeProvider>

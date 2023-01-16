@@ -5,10 +5,8 @@ import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
-import { async } from "q";
 import { useForm } from "react-hook-form";
 import './boardsPage.css'
-import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import EditBoard from "./EditBoard.jsx";
 
@@ -19,7 +17,7 @@ export default function BoardsPage() {
   const boardsCollectionRef = collection(db, "boards");
 
   const { boardsList, setBoardsList, setNewBoardColor, setNewBoardTitle, showEditWindow,
-    editIndex, editBoard } = useContext(Storage)
+    editIndex } = useContext(Storage)
 
   const { handleSubmit, reset, register, } = useForm()
 
@@ -29,7 +27,8 @@ export default function BoardsPage() {
     setBoardsList([...boardsList, data]);
     const doc_Data = {
       Title: data.Title,
-      Color: data.Color
+      Color: data.Color,
+      tasksList: []
     };
     addDoc(boardsCollectionRef, doc_Data);
     reset()

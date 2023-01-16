@@ -7,25 +7,26 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 export default function TaskList() {
+   
 
-
-    const { boardsList, editIndex, boardId, tasksList, setTasksList, setTaskIndex } = useContext(Storage)
-
+    const { boardsList, editIndex, boardId,  setTaskIndex , boardIndex} = useContext(Storage)
+    console.log("boardlist ",boardsList);
     const board = boardsList[editIndex]
     const boardRef = doc(db, "boards", boardId)
-    console.log(boardId)
-
 
     return (
-        <div className="DetailsBody">
-            {tasksList.map((item, index) =>
+        <div className="detailsBody">
+            {/* {boardsList[boardIndex].map((item, index)=>{
+            //         console.log(board)
+            // return board.tasksList?.map((item, index) =>
+            
                 <Form key={index} onClick={() => setTaskIndex(index)} >
                     <Form.Group name="packersOff" id={index} defaultValue="1"
                         className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Label lassName="strikethrough" htmlFor={index}>{item.name}
-                            ({item.quantity})</Form.Label>
+                        <Form.Label lassName="strikethrough" htmlFor={index}>{item}
+                            ({item})</Form.Label>
                         <p>{item}</p>
-                        <Form.Check type="checkbox" label="Check me out" />
+                        <Form.Check type="checkbox" label="" />
                     </Form.Group>
 
                     <Button variant="primary" type="button"
@@ -33,8 +34,37 @@ export default function TaskList() {
                     >
                         Delete
                     </Button>
-                </Form>)
-            }
+                </Form>}
+                )
+                
+            // }) */}
+            {/* } */}
+            
         </div >
+        // <div className="detailsBody">
+        //     {boardsList[].map((board)=>{
+        //             console.log(board)
+        //     return board.tasksList?.map((item, index) =>
+            
+        //         <Form key={index} onClick={() => setTaskIndex(index)} >
+        //             <Form.Group name="packersOff" id={index} defaultValue="1"
+        //                 className="mb-3" controlId="formBasicCheckbox">
+        //                 <Form.Label lassName="strikethrough" htmlFor={index}>{item}
+        //                     ({item})</Form.Label>
+        //                 <p>{item}</p>
+        //                 <Form.Check type="checkbox" label="" />
+        //             </Form.Group>
+
+        //             <Button variant="primary" type="button"
+        //             // onClick={() => deleteTask(item?.id)}
+        //             >
+        //                 Delete
+        //             </Button>
+        //         </Form>)
+                
+        //     })
+        //     }
+            
+        // </div >
     )
 }

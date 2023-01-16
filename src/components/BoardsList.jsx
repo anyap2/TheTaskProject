@@ -1,28 +1,32 @@
 import './boardsList.css'
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { db } from "../Firebase-config.js";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Alert } from "react-bootstrap";
 import { Storage } from "../App.js";
-import Card from 'react-bootstrap/Card';;
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+
 
 
 export default function BoardsList() {
   const boardsCollectionRef = collection(db, "boards");
 
-  const { boardIndex, setBoardIndex, boardsList, setBoardsList, showEditWindow, setShowEditWindow, editIndex, setEditIndex,setShowTaskWindow
-    , setBoardId } = useContext(Storage)
+  const { boardIndex, setBoardIndex, boardsList, setBoardsList, showEditWindow,
+    setShowEditWindow, setEditIndex, setShowTaskWindow, setBoardId, } = useContext(Storage)
 
   useEffect(() => {
     const getBoards = async () => {
-      const data = await getDocs(boardsCollectionRef);
+      const data = await getDocs(boardsCollectionRef)
+
       setBoardsList(
         data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     };
     getBoards();
   }, []);
+
 
   const deleteBoard = (id, index) => {
     try {
@@ -42,10 +46,11 @@ export default function BoardsList() {
     <div id="boardsListDiv">
 
       {boardsList.map((board, index) => {
+
         return (
-          <div onClick={() => { setBoardIndex(index); setBoardId(board?.id); setShowTaskWindow(index) }}>
+          <div key={index}
+          >
             <Alert
-              key={index}
               variant={board?.Color}
               text={board?.Color === 'light' ? 'dark' : 'white'}
               style={{ width: '12rem' }}
@@ -55,10 +60,29 @@ export default function BoardsList() {
                 {board?.Title}
               </Card.Title>
 
-              <Card.Text>
-                {board?.Color}
-              </Card.Text>
+              {board?.tasksList?.map((item, i) => {
+                return (
+                  <div>
+                    <input type="checkbox" /><span>{item}</span>
+                  </div>
 
+                )
+              })}
+
+              <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-clipboard-list"
+                width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none"
+                strokeLinecap="round" strokeLinejoin="round" opacity="0.6"
+                type='button' onClick={() => {
+                  setBoardIndex(index); setBoardId(board?.id); setShowTaskWindow(index)
+                }}>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                <rect x="9" y="3" width="6" height="4" rx="2" />
+                <line x1="9" y1="12" x2="9.01" y2="12" />
+                <line x1="13" y1="12" x2="15" y2="12" />
+                <line x1="9" y1="16" x2="9.01" y2="16" />
+                <line x1="13" y1="16" x2="15" y2="16" />
+              </svg>
 
               <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-edit"
                 width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50"
@@ -84,6 +108,7 @@ export default function BoardsList() {
                 <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                 <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
               </svg>
+
             </Alert>
           </div>
         )
