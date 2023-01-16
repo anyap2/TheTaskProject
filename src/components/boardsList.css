@@ -1,0 +1,25 @@
+#boardsListDiv{
+    display: flex;
+    width: 100vw;
+}
+#halfWhiteDiv {
+    width: 100vw;
+    height: 100VH;
+    position: absolute;
+    background-color: rgb(195 190 194 / 80%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    TOP: 0;
+    left: 0;
+    padding-top: 11vw;
+}
+
+#editBoardDiv {
+    margin: 0;
+    width: 63vw;
+    height: 40vw;
+    display: flex;
+    justify-content: center;
+
+}

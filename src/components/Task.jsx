@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+import Card from 'react-bootstrap/Card';;
 
 
 function Task() {
@@ -78,30 +79,39 @@ function Task() {
 
     return (
         <div>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Card border="secondary" style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
 
-                    <Form.Label>
-                        Your to do list
-                        <NavLink state={{
-                            listId: "shopping list"
-                            // location?.state?.listId
-                        }}
-                            className="link" to="/Details">
+                            <Form.Label>
+                                Your to do list
+
+                            </Form.Label>
+
+                            <Form.Control type="text" placeholder="new to do task..."
+                                onChange={(event) => { setNewToDoTask(event.target.value) }} />
+
+                        </Form.Group>
+
+                        <Button variant="primary" type="button"
+                            onClick={() => () => addToDotask()}>
+                            Create new task
+                        </Button>
+                        <Button variant="primary" type="button"
+                            onClick={() => () =>
+                                <NavLink state={{
+                                    listId: "shopping list"
+                                    // location?.state?.listId
+                                }} to="/Details">
+
+                                </NavLink>}>
                             Details
-                        </NavLink>
-                    </Form.Label>
+                        </Button>
+                    </Form>
 
-                    <Form.Control type="email" placeholder="new to do task..."
-                        onChange={(event) => { setNewToDoTask(event.target.value) }} />
-
-                </Form.Group>
-
-                <Button variant="primary" type="button"
-                    onClick={() => () => addToDotask()}>
-                    create new task
-                </Button>
-            </Form>
+                </Card.Body>
+            </Card>
 
             <h2>Your tasks:</h2>
             {toDoPage.map((task, index) => {
@@ -115,14 +125,32 @@ function Task() {
             })}
             {console.log(1)}
 
-            <h1>Your shopping list</h1>
-            <input placeholder="your item..."
-                onChange={(event) => { setNewItem(event.target.value) }}>
-            </input>
-            <input type='number' placeholder="how much..."
-                onChange={(event) => { setNewQuantity(event.target.value) }}>
-            </input>
-            <button type="button" onClick={() => (addItemShopList)}>create new item</button>
+
+
+
+            <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                    <Form.Label> Your shopping list</Form.Label>
+                    <Form.Control type="text" placeholder="your item..."
+                        onChange={(event) => { setNewItem(event.target.value) }} />
+
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+
+                    <Form.Control type="number" placeholder="how much..."
+                        onChange={(event) => { setNewQuantity(event.target.value) }} />
+
+                </Form.Group>
+
+                <Button variant="primary" type="button"
+                    onClick={() => (addItemShopList)}>
+                    create new item
+                </Button>
+            </Form>
+
+
             <h2>Buy:</h2>
             {shoppingListPage.map((item, index) => {
                 return <div key={index}>
