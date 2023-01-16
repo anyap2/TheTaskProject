@@ -103,14 +103,32 @@ function Task() {
             )
             }
 
-            <h1>Your shopping list</h1>
-            <input placeholder="your item..."
-                onChange={(event) => { setNewItem(event.target.value) }}>
-            </input>
-            <input type='number' placeholder="how much..."
-                onChange={(event) => { setNewQuantity(event.target.value) }}>
-            </input>
-            <button type="button" onClick={() => (addItemShopList)}>create new item</button>
+
+
+
+            <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                    <Form.Label> Your shopping list</Form.Label>
+                    <Form.Control type="text" placeholder="your item..."
+                        onChange={(event) => { setNewItem(event.target.value) }} />
+
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+
+                    <Form.Control type="number" placeholder="how much..."
+                        onChange={(event) => { setNewQuantity(event.target.value) }} />
+
+                </Form.Group>
+
+                <Button variant="primary" type="button"
+                    onClick={() => (addItemShopList)}>
+                    create new item
+                </Button>
+            </Form>
+
+
             <h2>Buy:</h2>
             {shoppingListPage.map((item, index) => {
                 return 
