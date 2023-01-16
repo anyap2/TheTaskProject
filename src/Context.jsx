@@ -10,7 +10,7 @@ export default function Context() {
     const [editBoardColor, setEditBoardColor] = useState('')
     const [selectedColor, setSelectedColor] = useState()
     const [backGround, setBackGround] = useState()
-
+    const [data,setData]=useState()
     return {
         boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
         setNewBoardTitle, editBoardTitle, setEditBoardTitle, editBoardColor,
