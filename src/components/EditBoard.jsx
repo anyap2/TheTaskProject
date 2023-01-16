@@ -15,11 +15,6 @@ export default function EditBoard() {
 
   const board = boardsList[editIndex]
 
-  // useEffect(() => {
-  //   setEditBoardColor(board.color)
-  //   setEditBoardTitle(board.title)
-  // }, [])
-
   const updateBoard = async () => {
 
     const boardRef = doc(db, "boards", board.id)
