@@ -59,7 +59,7 @@ export default function BoardsList() {
               <Card.Text>
                 {board?.Color}
               </Card.Text>
-              <EditBoard></EditBoard>
+              {/* <EditBoard></EditBoard> */}
 
               <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-edit"
                 width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50"
