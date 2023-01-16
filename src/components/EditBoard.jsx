@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 
 
 export default function EditBoard() {
+
   const { boardsList, setBoardsList, setShowEditWindow, editBoardTitle, editBoardColor,
     setEditBoardColor, setEditBoardTitle, editIndex, setEditIndex
   } = useContext(Storage)

@@ -8,33 +8,31 @@ import Details from './components/Details'
 import TaskList from './components/TaskList';
 import { Route, Routes, NavLink, } from 'react-router-dom';
 import './app.css'
+import ShowTask from './components/ShowTask';
 export const Storage = createContext()
 
 
 function App() {
-  // const { boardDetails, setBoardDetails
-  // } = useContext(Storage)
+
 
   const values = Context()
-
   return (
     <ThemeProvider breakpoints={[
       'xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
       minBreakpoint="xxs">
       <Storage.Provider value={values}>
-        <div className="">
+        <div className="all">
 
-          <BoardsPage />
+          <div className='forms'>
+            <BoardsPage />
+            <Task />
+          </div>
+          <ShowTask />
 
           <Routes>
             <Route path="/Details" element={<Details />}> </Route>
             <Route path="/components/Task" element={<Task />}> </Route>
           </Routes>
-
-            <div className='BoardDetails'>
-              <Task></Task>
-              {/* <TaskList/> */}
-            </div>
         </div>
       </Storage.Provider>
     </ThemeProvider>

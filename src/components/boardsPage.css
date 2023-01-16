@@ -19,9 +19,9 @@
     justify-content: center;
 
 }
-/* #createBoardDiv {
-
-} */
+.formStyle{
+    margin-right: 1vw;
+}
 
 #createCard {
     display: block;

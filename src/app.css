@@ -1,7 +1,14 @@
-.BoardDetails {
+.all{
+    display: flex;
+}
+
+.forms {
     position: absolute;
-    width: 100vw;
-    height: 30vh;
-    border: 1px solid black;
-    bottom: 5px;
+    left: 10px;
+    width: 30vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: -26px;
 }

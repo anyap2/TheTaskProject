@@ -16,6 +16,8 @@ export default function Context() {
     const [boardId, setBoardId] = useState('')
     const [tasksList, setTasksList] = useState()
     const [newTask, setNewTask] = useState()
+    const [taskIndex, setTaskIndex]=useState()
+    const [showTaskWindow,setShowTaskWindow] = useState()
 
     return {
         boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
@@ -23,6 +25,7 @@ export default function Context() {
         showEditWindow, setShowEditWindow, backGround, setBackGround, selectedColor,
         setSelectedColor, editIndex, setEditIndex, boardDetails, setBoardDetails, boardIndex,
         setBoardIndex, boardId, setBoardId, tasksList, setTasksList, newTask, setNewTask,
+        taskIndex, setTaskIndex,showTaskWindow,setShowTaskWindow
 
     }
-}
+} 

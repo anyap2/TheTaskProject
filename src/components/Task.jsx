@@ -63,7 +63,6 @@ export default function Task() {
 
                 </Card.Body>
             </Card>
-            <TasksList />
         </div>
     )
 }
