@@ -6,11 +6,11 @@ function TaskList() {
     const [tasksArray, setTasksArray] = useState()
     const [inputValue, setInputValue] = useState()
 
-    const { boardsList, editIndex
+    const { boardsList, editIndex, boardId
     } = useContext(Storage)
     console.log(editIndex)
     const board = boardsList[editIndex]
-    const boardRef = doc(db, "boards", board?.id)
+    const boardRef = doc(db, "boards", boardId)
     const asyncFunc = async () => {
         // Atomically add a new region to the "regions" array field.
         await updateDoc(boardRef, {

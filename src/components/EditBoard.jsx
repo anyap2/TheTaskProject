@@ -22,7 +22,8 @@ export default function EditBoard() {
 
   const updateBoard = async () => {
 
-    const boardRef = doc(db, "boards", board.id)
+    const boardRef = doc(db, "boards", board?.id)
+    console.log(board)
     await updateDoc(boardRef, { Color: editBoardColor, Title: editBoardTitle });
 
     const temp = boardsList;

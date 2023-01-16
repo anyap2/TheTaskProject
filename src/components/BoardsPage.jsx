@@ -6,10 +6,9 @@ import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
-import EditBoard from "./EditBoard.jsx";
 import './boardsPage.css'
 import Card from 'react-bootstrap/Card';
-
+import EditBoard from "./EditBoard.jsx";
 
 
 export default function BoardsPage() {
@@ -35,12 +34,13 @@ export default function BoardsPage() {
   };
 
   return (
+    
     <div id="createBoardDiv">
       {
         showEditWindow === editIndex ?
-          <div id='halfWhiteDiv'>
+        <div id='halfWhiteDiv'>
             <div id="editBoardDiv">
-              <EditBoard />
+            <EditBoard/>
             </div>
           </div>
 
