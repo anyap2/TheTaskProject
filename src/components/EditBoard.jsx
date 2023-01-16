@@ -8,26 +8,26 @@ import './editForm.css'
 import Modal from 'react-bootstrap/Modal';
 
 
-export default function EditBoard(props) {
-  // console.log(props)
+export default function EditBoard() {
   const { boardsList, setBoardsList, setShowEditWindow, editBoardTitle, editBoardColor,
-    setEditBoardColor, setEditBoardTitle, 
+    setEditBoardColor, setEditBoardTitle, editIndex, setEditIndex
   } = useContext(Storage)
 
-  useEffect(() => {
-    setEditBoardColor(props.color)
-    setEditBoardTitle(props.title)
-  }, [])
-  // console.log(editBoardColor)
+  const board = boardsList[editIndex]
 
-  const updateBoard = async (id, title, color) => {
+  // useEffect(() => {
+  //   setEditBoardColor(board.color)
+  //   setEditBoardTitle(board.title)
+  // }, [])
 
-    const boardRef = doc(db, "boards", props.id)
+  const updateBoard = async () => {
+
+    const boardRef = doc(db, "boards", board.id)
     await updateDoc(boardRef, { Color: editBoardColor, Title: editBoardTitle });
 
     const temp = boardsList;
-    temp[props.index].Title = editBoardTitle
-    temp[props.index].Color = editBoardColor
+    temp[editIndex].Title = editBoardTitle
+    temp[editIndex].Color = editBoardColor
     setBoardsList([...temp])
     setShowEditWindow(false);
   }
@@ -47,16 +47,16 @@ export default function EditBoard(props) {
         <Modal.Body>
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Name your board</Form.Label>
+            <Form.Label>Change your boards name</Form.Label>
             <Form.Control type="text" placeholder="Title..."
-              defaultValue={editBoardTitle}
+              defaultValue={board.Title}
               onChange={(e) => setEditBoardTitle(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Change your mood</Form.Label>
             <Form.Select aria-label="Floating label select example"
-              defaultValue={editBoardColor}
+              defaultValue={board.Color}
               onChange={(e) => setEditBoardColor(e.target.value)}>
               <option>Choose your colour</option>
               <option value='primary' >primary</option>

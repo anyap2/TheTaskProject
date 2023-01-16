@@ -1,15 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
 import { db } from "../Firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import BoardsList from "./BoardsList.jsx";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
-import { async } from "q";
-import { useForm } from "react-hook-form";
+import EditBoard from "./EditBoard.jsx";
 import './boardsPage.css'
-import Alert from 'react-bootstrap/Alert';
-import Card from 'react-bootstrap/Card';;
+import Card from 'react-bootstrap/Card';
 
 
 
@@ -17,7 +16,8 @@ export default function BoardsPage() {
 
   const boardsCollectionRef = collection(db, "boards");
 
-  const { boardsList, setBoardsList, setNewBoardColor, setNewBoardTitle } = useContext(Storage)
+  const { boardsList, setBoardsList, setNewBoardColor, setNewBoardTitle,
+  showEditWindow, setShowEditWindow, editIndex, EditBoard } = useContext(Storage)
 
   const { handleSubmit, reset, register, } = useForm()
 
@@ -35,11 +35,22 @@ export default function BoardsPage() {
 
   return (
     <div id="createBoardDiv">
+      {
+        showEditWindow === editIndex ?
+          <div id='halfWhiteDiv'>
+            <div id="editBoardDiv">
+              <EditBoard />
+            </div>
+          </div>
+
+          : <></>
+      }
       <br />
-      <Card border="secondary" style={{ width: '18rem' }}>
+      <Card border="secondary" style={{ width: '18rem' }}
+        id="createCard">
         <Card.Body>
           <Form id="createBoardDiv" onSubmit={handleSubmit(onSubmit)}>
-            <h1 className='lg'>Your boards</h1>
+            <h1 className='lg'>Create board</h1>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
 
@@ -51,7 +62,7 @@ export default function BoardsPage() {
 
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="foFrmBasicPassword">
 
               <Form.Label>Chose your mood</Form.Label>
 
@@ -71,7 +82,7 @@ export default function BoardsPage() {
 
             </Form.Group>
 
-            <Button variant="primary-emphasis" type="submit" >
+            <Button variant="outline-info" type="submit" >
               Create board
             </Button>
 
