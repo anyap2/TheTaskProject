@@ -7,6 +7,9 @@ import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
 import { async } from "q";
 import { useForm } from "react-hook-form";
+import './boardsPage.css'
+import Alert from 'react-bootstrap/Alert';
+import Card from 'react-bootstrap/Card';;
 
 
 
@@ -14,75 +17,71 @@ export default function BoardsPage() {
 
   const boardsCollectionRef = collection(db, "boards");
 
-  const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
-    setNewBoardTitle } = useContext(Storage)
+  const { boardsList, setBoardsList, setNewBoardColor, setNewBoardTitle } = useContext(Storage)
 
   const { handleSubmit, reset, register, } = useForm()
 
   const onSubmit = (data) => {
-
     setNewBoardTitle(data.Title)
     setNewBoardColor(data.Color)
-
+    setBoardsList([...boardsList, data]);
     const doc_Data = {
       Title: data.Title,
-      Color: data.Color,
+      Color: data.Color
     };
-    // console.log({
-    //   Title: newBoardTitle,
-    //   Color: newBoardColor,
-    // })
-    console.log(doc_Data);
     addDoc(boardsCollectionRef, doc_Data);
-
-    setBoardsList([...boardsList, data]);
-
     reset()
   };
 
   return (
-    <div>
-      <h1 className='lg'>Your boards</h1>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+    <div id="createBoardDiv">
+      <br />
+      <Card border="secondary" style={{ width: '18rem' }}>
+        <Card.Body>
+          <Form id="createBoardDiv" onSubmit={handleSubmit(onSubmit)}>
+            <h1 className='lg'>Your boards</h1>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
 
-          <Form.Label>Name your board</Form.Label>
+              <Form.Label >Name your board</Form.Label>
 
-          <Form.Control type="text" placeholder="Title..."
-            {...register("Title",)}
-          />
+              <Form.Control type="text" placeholder="Title..."
+                {...register("Title",)}
+              />
 
-        </Form.Group>
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
 
-          <Form.Label>Chose your mood</Form.Label>
+              <Form.Label>Chose your mood</Form.Label>
 
-          <Form.Select aria-label="Floating label select example"
-            {...register("Color",)}
-          >
+              <Form.Select aria-label="Floating label select example"
+                {...register("Color",)}
+              >
 
-            <option>Choose your colour</option>
-            <option value='info'>info</option>
-            <option value='warning'>warning</option>
-            <option value='success'>success</option>
-            <option value='danger'>danger</option>
-            <option value='primary'>primary</option>
-            <option value='light'>light</option>
-            <option value='dark'>dark</option>
-          </Form.Select>
+                <option>Choose your colour</option>
+                <option value='info'>info</option>
+                <option value='warning'>warning</option>
+                <option value='success'>success</option>
+                <option value='danger'>danger</option>
+                <option value='primary'>primary</option>
+                <option value='light'>light</option>
+                <option value='dark'>dark</option>
+              </Form.Select>
 
-        </Form.Group>
+            </Form.Group>
 
-        <Button variant="primary" type="submit" >
-          Create board
-        </Button>
+            <Button variant="primary-emphasis" type="submit" >
+              Create board
+            </Button>
 
-      </Form>
+          </Form>
+
+        </Card.Body>
+      </Card>
+      <br />
 
       <BoardsList />
-
     </div>
   );
 }

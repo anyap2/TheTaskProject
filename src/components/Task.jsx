@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+import Card from 'react-bootstrap/Card'; import { FormGroup } from "react-bootstrap";
+;
 
 function Task() {
 
@@ -59,6 +61,7 @@ function Task() {
             console.log(error);
         }
     }, [])
+
     useEffect(() => {
         try {
             const getArrayListPage = async () => {
@@ -90,66 +93,108 @@ function Task() {
 
     return (
         <div>
+            <Card border="secondary" style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                            <Form.Label>
+                                Your to do list
+
+                            </Form.Label>
+
+                            <Form.Control type="text" placeholder="new to do task..."
+                                onChange={(event) => { setNewToDoTask(event.target.value) }} />
+
+                        </Form.Group>
+
+                        <Button variant="primary" type="button"
+                            onClick={() => addToDotask()}>
+                            Create new task
+                        </Button>
+
+                        <Form.Group>
+
+                            <Form.Control type="email" placeholder="new to do task..."
+                                onChange={(event) => { setNewToDoTask(event.target.value) }} />
+
+                        </Form.Group>
+
+                        <Button variant="primary" type="button"
+                            onClick={() => addToDotask()}>
+                            create new task
+                        </Button>
+                    </Form>
+
+
+                </Card.Body>
+            </Card>
+
+            <h2>Your tasks:</h2>
+            {
+                toDoPage.map((task, index) => {
+                    return <div key={index}>
+                        <ul>
+
+                            <li><h3>{task.name}</h3></li>
+                            <button type="button" onClick={() => deleteToDoTask(task?.id)}>
+                                Delete task
+                            </button>
+                        </ul>
+                    </div>
+                })
+            }
+            <h3>lisos
+
+            </h3>
+            {
+                arrayListPage.map((task, index) => {
+
+                    return <div key={index}>
+                        {console.log(task.tasks)}
+
+                        <ul>
+                            {task.tasks && task.tasks.map((task2, index) => {
+                                console.log(task2)
+                                return <p>{task2}</p>
+                            })}
+                            <li>
+                                <h3>{task.item}</h3>
+                            </li>
+
+                            <li>
+                                <h3>{task.quantity}</h3>
+                            </li>
+                        </ul>
+                    </div>
+                })
+            }
+
+
+
+
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
 
-                    <Form.Label>
-                        Your to do list
-                        <NavLink state={{
-                            listId: "shopping list"
-                            // location?.state?.listId
-                        }}
-                            className="link" to="/Details">
-                            Details
-                        </NavLink>
-                    </Form.Label>
+                    <Form.Label> Your shopping list</Form.Label>
+                    <Form.Control type="text" placeholder="your item..."
+                        onChange={(event) => { setNewItem(event.target.value) }} />
 
-                    <Form.Control type="text" placeholder="new to do task..."
-                        onChange={(event) => { setNewToDoTask(event.target.value) }} />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+
+                    <Form.Control type="number" placeholder="how much..."
+                        onChange={(event) => { setNewQuantity(event.target.value) }} />
 
                 </Form.Group>
 
                 <Button variant="primary" type="button"
-                    onClick={() => addToDotask()}>
-                    create new task
+                    onClick={() => (addItemShopList)}>
+                    create new item
                 </Button>
             </Form>
 
-            <h2>Your tasks:</h2>
-            {toDoPage.map((task, index) => {
-                return <div key={index}>
-                    <ul>
-
-                        <li><h3>{task.name}</h3></li>
-                        <button type="button" onClick={() => deleteToDoTask(task?.id)}>
-                            Delete task
-                        </button>
-                    </ul>
-                </div>
-            })}
-            <h3>lisos
-
-            </h3>
-            {arrayListPage.map((task, index) => {
-
-                return <div key={index}>
-                    {console.log(task.tasks)}
-
-                    <ul>
-                        {task.tasks && task.tasks.map((task2, index) => {
-                            console.log(task2)
-                            return <p>{task2}</p>
-                        })}
-                        <li>
-                        <h3>{task.item}</h3>
-                        </li>
-                        
-                        <li>
-                            <h3>{task.quantity}</h3>
-                        </li>
-                    </ul>
-                </div>
-            })}
 
             <h1>Your shopping list</h1>
             <input placeholder="your item..."
@@ -161,15 +206,16 @@ function Task() {
             <button type="button" onClick={() => (addItemShopList)}>create new item</button>
             <h2>Buy:</h2>
             {shoppingListPage.map((item, index) => {
-                return <div key={index}>
-
+                return 
+                <div key={index}>
                     <h3>{item.name} <span>({item.quantity})</span> </h3>
                     <button type="button" onClick={() => deleteShoppingItem(item?.id)}>
                         Delete item
                     </button>
                 </div>
-            })}
-        </div>
+            })
+            }
+        </div >
 
     )
 }

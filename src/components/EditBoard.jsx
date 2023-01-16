@@ -4,86 +4,89 @@ import { updateDoc, doc } from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Storage } from "../App.js";
+import './editForm.css'
+import Modal from 'react-bootstrap/Modal';
 
 
-export default function EditBoard({ data }) {
-
-  const { boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
-    setNewBoardTitle, showEditWindow, setShowEditWindow, editBoardTitle, editBoardColor,
-    setEditBoardColor, setEditBoardTitle, mapBoard
+export default function EditBoard(props) {
+  // console.log(props)
+  const { boardsList, setBoardsList, setShowEditWindow, editBoardTitle, editBoardColor,
+    setEditBoardColor, setEditBoardTitle, 
   } = useContext(Storage)
 
   useEffect(() => {
-    setEditBoardColor(data.Color)
-    setEditBoardTitle(data.Title)
+    setEditBoardColor(props.color)
+    setEditBoardTitle(props.title)
   }, [])
-  console.log(data)
+  // console.log(editBoardColor)
 
-  const updateBoard = () => {
-    // try {
+  const updateBoard = async (id, title, color) => {
 
-      const boardRef = doc(db, "boards", data)
-      updateDoc(boardRef, { Title: editBoardTitle });
-      updateDoc(boardRef, { Color: editBoardColor });
-      const temp = boardsList;
-      let index;
+    const boardRef = doc(db, "boards", props.id)
+    await updateDoc(boardRef, { Color: editBoardColor, Title: editBoardTitle });
 
-      temp.forEach((item, i) => { if (item.id === data.id) index = i })
-
-      temp[index].Title = editBoardTitle
-      temp[index].Color = editBoardColor
-      setBoardsList([...temp])
-      setShowEditWindow(false);
-
-
-    // }
-    // catch (error) {
-    //   console.log(error);
-    // }
+    const temp = boardsList;
+    temp[props.index].Title = editBoardTitle
+    temp[props.index].Color = editBoardColor
+    setBoardsList([...temp])
+    setShowEditWindow(false);
   }
 
 
   return (
-    <Form>
+    <div
+      className="modal show"
+      style={{ display: 'block', position: 'initial' }}>
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Modal.Dialog>
 
-        <Form.Label>Name your board</Form.Label>
+        <Modal.Header closeButton onClick={() => setShowEditWindow("")}>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
 
-        <Form.Control type="text" placeholder="Title..."
-          defaultValue={editBoardTitle}
-          onChange={(e) => setEditBoardTitle(e.target.value)} />
+        <Modal.Body>
 
-      </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Name your board</Form.Label>
+            <Form.Control type="text" placeholder="Title..."
+              defaultValue={editBoardTitle}
+              onChange={(e) => setEditBoardTitle(e.target.value)} />
+          </Form.Group>
 
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Change your mood</Form.Label>
+            <Form.Select aria-label="Floating label select example"
+              defaultValue={editBoardColor}
+              onChange={(e) => setEditBoardColor(e.target.value)}>
+              <option>Choose your colour</option>
+              <option value='primary' >primary</option>
+              <option value='success' >success</option>
+              <option value='danger' >danger</option>
+              <option value='warning' >warning</option>
+              <option value='info' >info</option>
+              <option value='light' >light</option>
+              <option value='dark' >dark</option>
+            </Form.Select>
+          </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+        </Modal.Body>
 
-        <Form.Label>Change your mood</Form.Label>
+        <Modal.Footer>
 
-        <Form.Select aria-label="Floating label select example"
-          defaultValue={editBoardColor}
-          onChange={(e) => setEditBoardColor(e.target.value)}>
+          <Button variant="secondary"
+            onClick={() => setShowEditWindow("")}>
+            Close
+          </Button>
 
-          <option>Choose your colour</option>
-          <option value='primary' >primary</option>
-          <option value='success' >success</option>
-          <option value='danger' >danger</option>
-          <option value='warning' >warning</option>
-          <option value='info' >info</option>
-          <option value='light' >light</option>
-          <option value='dark' >dark</option>
+          <Button variant="primary" type="button"
+            onClick={() => { updateBoard(); setShowEditWindow("") }}>
+            Save the changes
+          </Button>
 
-        </Form.Select>
+        </Modal.Footer>
 
-      </Form.Group>
-
-      <Button variant="primary" type="button"
-        onClick={() => { updateBoard() }}>
-        Save the changes
-      </Button>
-
-    </Form>
+      </Modal.Dialog>
+    </div>
 
   );
 }

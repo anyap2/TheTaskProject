@@ -8,14 +8,13 @@ export default function Context() {
     const [showEditWindow, setShowEditWindow] = useState(false)
     const [editBoardTitle, setEditBoardTitle] = useState('')
     const [editBoardColor, setEditBoardColor] = useState('')
-    const [mapBoard, setMapBoard] = useState('')
-    const [selectedColor, setSelectedColor]=useState()
+    const [selectedColor, setSelectedColor] = useState()
     const [backGround, setBackGround] = useState()
 
     return {
         boardsList, setBoardsList, newBoardColor, newBoardTitle, setNewBoardColor,
         setNewBoardTitle, editBoardTitle, setEditBoardTitle, editBoardColor,
-        setEditBoardColor, mapBoard, setMapBoard, showEditWindow,
-        setShowEditWindow, backGround, setBackGround, selectedColor, setSelectedColor
+        setEditBoardColor, showEditWindow, setShowEditWindow, backGround, setBackGround,
+        selectedColor, setSelectedColor
     }
 }
